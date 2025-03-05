@@ -52,6 +52,9 @@
         background-color: #f5f5f5;
         margin: 0;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     /* ✅ Dashboard Stats Section */
@@ -60,12 +63,15 @@
         justify-content: center;
         gap: 30px;
         margin-bottom: 40px;
-        flex-wrap: wrap; /* ✅ Responsive */
+        width: 100%;
+        max-width: 900px;
     }
 
     .stat-box {
-        width: 200px; /* ✅ Slightly Increased */
-        height: 200px;
+        flex: 1; /* ✅ Flexible width */
+        min-width: 150px; /* ✅ Minimum width for small screens */
+        height: auto;
+        aspect-ratio: 1/1; /* ✅ Maintains square shape */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -103,8 +109,8 @@
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-        max-width: 1100px; /* ✅ Increased Width */
-        margin: 50px auto;
+        width: 90%; /* ✅ Responsive width */
+        max-width: 1100px;
         text-align: center;
     }
 
@@ -122,9 +128,10 @@
     }
 
         .reviews-table th, .reviews-table td {
-            padding: 18px; /* ✅ More Spacing */
+            padding: 18px;
             border-bottom: 1px solid #ddd;
             text-align: center;
+            word-break: break-word; /* ✅ Prevent text overflow */
         }
 
         .reviews-table th {
@@ -137,20 +144,4 @@
             font-size: 16px;
             color: #333;
         }
-
-    /* ✅ Responsive Design */
-    @media (max-width: 768px) {
-        .dashboard-container
-
-    {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .stat-box {
-        width: 100%;
-        max-width: 250px;
-    }
-
-    }
 </style>
