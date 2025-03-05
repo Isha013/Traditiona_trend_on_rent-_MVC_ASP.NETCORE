@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use the layout file
+}
+
+<!-- Hero Section -->
+
+<div class="hero">
+</div>
+<h1 style=" color: #7B273B; font-family: 'Georgia', serif; text-align:center;">WE DEAL IN</h1>
+<a href="@Url.Action("Register", "Account")">
+
+    <div class="container">
+        <div class="item">
+
+            <img src="Images/choli 1.png" alt="Design 1" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="Images/choli 2.png" alt="Design 2" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="Images/choli 3.png" alt="Design 3" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="Images/design 1.png" alt="Design 4" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="Images/choli 4.png" alt="Design 5" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="Images/design 3.png" alt="Design 5" />
+            <div class="overlay">View more</div>
+        </div>
+    </div>
+
+    <!-- image2 Section -->
+    <div class="container">
+        <a href="Register.cshtml">
+            <div class="item">
+                <img src="Images/design 4.png" alt="Design 1" />
+                <div class="overlay">View more</div>
+            </div>
+            <div class="item">
+                <img src="Images/design 5.png" alt="Design 2" />
+                <div class="overlay">View more</div>
+            </div>
+            <div class="item">
+                <img src="Images/design 6.png" alt="Design 3" />
+                <div class="overlay">View more</div>
+            </div>
+            <div class="item">
+                <img src="Images/design 7.png" alt="Design 4" />
+                <div class="overlay">View more</div>
+            </div>
+            <div class="item">
+                <img src="Images/design 8.png" alt="Design 5" />
+                <div class="overlay">View more</div>
+            </div>
+            <div class="item">
+                <img src="Images/design 10.png" alt="Design 5" />
+                <div class="overlay">View more</div>
+            </div>
+    </div>
+</a>
+<!--rental process section-->
+<div class="rental-container">
+    <div class="rental-info">
+        <div class="rental-step">
+            <span>1</span>
+            <p>Bookings via physical stores and website</p>
+        </div>
+        <div class="rental-step">
+            <span>2</span>
+            <p>Doorstep delivery and pickup across 30+ cities</p>
+        </div>
+        <div class="rental-step">
+            <span>3</span>
+            <p>2 day rentals at 1/10th of the M.R.P.</p>
+        </div>
+        <div class="rental-step">
+            <span>4</span>
+            <p>In-store trials and customisations</p>
+        </div>
+    </div>
+
+    <div class="rental-image">
+        <img src="Images/p3.png" alt="Rental Process">
+    </div>
+
+    <div class="rental-heading">
+        <h1>RENTAL <br> Process</h1>
+    </div>
+</div>
+
+<!-- Story Section -->
+<div class="story-section">
+    <div class="story-image">
+        <img src="Images/carousel3.png" alt="Our Story Image" />
+    </div>
+    <div class="story-content">
+        <div class="story-title">Our Story</div>
+        <div class="story-text">"Sustainable Style, Traditional Grace"</div>
+        <a href="@Url.Action("OurStory", "Home")" class="story-button">Explore More</a>
+    </div>
+</div>
+
+<!-- Team Section (WebForm1 Content) -->
+<div class="container">
+    <div class="team-section">
+        <h2>Our Team</h2>
+        <p>We strive to do everything so that you can comfortably and productively work in our space and create amazing products and services</p>
+        <div class="team-members">
+            <div class="team-member">
+                <a href="OurTeam.cshtml">
+                    <img src="https://media.istockphoto.com/id/1369508766/photo/beautiful-successful-latin-woman-smiling.jpg?s=612x612&w=0&k=20&c=LoznG6eGT42_rs9G1dOLumOTlAveLpuOi_U755l_fqI=" alt="Umangi Tank" />
+                </a>
+                <h3>Umangi Tank</h3>
+                <span>Designer</span>
+                <div class="social-icons">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-linkedin-in"></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <a href="OurTeam.cshtml">
+                    <img src="https://www.imageconsultinginstitute.com/wp-content/uploads/2021/12/smiling-confident-businesswoman-posing-with-arms-folded.jpg" alt="Isha Davda" />
+                </a>
+                <h3>Isha Davda</h3>
+                <span>Owner</span><br />
+                <div class="social-icons">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="" class="fab fa-linkedin-in"></a>
+                </div>
+            </div>
+            <div class="team-member">
+                <a href="OurTeam.cshtml">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/044/245/414/small_2x/confident-young-businessman-writing-on-a-clipboard-png.png" alt="Jay Parmar" />
+                </a>
+                <h3>Jay Parmar</h3>
+                <span>Developer</span>
+                <div class="social-icons">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-linkedin-in"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--chat on whatsapp section -->
+<div class="container mt-4">
+    <div class="container-custom">
+
+        <!-- Bridal Collection Section -->
+        <div class="bridal-section">
+            <h2>BRIDAL Collection</h2>
+        </div>
+
+        <!-- Bridal Image -->
+        <div class="bridal-image">
+            <img src="Images/bridal.png" alt="Bridal Collection" />
+        </div>
+
+        <!-- Franchise Section -->
+        <div class="franchise-section">
+            <h2>FLYROBE FRANCHISE</h2>
+            <p>Sign up for India's first and only rental fashion franchise and commence a Flyrobe store in your city.</p>
+            <a href="https://wa.me/yourwhatsappphonenumber" class="chat-btn">LET’S CHAT</a>
+        </div>
+
+    </div>
+</div>

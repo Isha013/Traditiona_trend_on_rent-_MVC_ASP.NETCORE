@@ -1,0 +1,133 @@
+﻿@* Admin Header Partial View *@
+<style>
+    body, ul, li, a {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        list-style: none;
+        font-family: Arial, sans-serif;
+    }
+
+    /* ✅ Fixed Header */
+    .header {
+        background: #6b1f31;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 20px;
+        font-size: 22px;
+        font-weight: bold;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ✅ Sidebar Toggle Button */
+    .toggle-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        display: none; /* Initially hidden */
+    }
+
+    /* ✅ Logo */
+    .logo img {
+        width: 60px;
+        height: auto;
+    }
+
+    /* ✅ Admin Section */
+    .admin-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+        .admin-section span {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+    /* ✅ Admin Icon */
+    .admin-icon {
+        font-size: 24px;
+        color: white;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        padding: 5px 8px;
+    }
+
+    /* ✅ Logout Dropdown */
+    .admin-dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background: white;
+        width: 150px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+        .admin-dropdown a {
+            display: block;
+            padding: 10px;
+            color: #6b1f31;
+            font-size: 16px;
+            text-align: center;
+        }
+
+            .admin-dropdown a:hover {
+                background: #6b1f31;
+                color: white;
+            }
+
+   
+</style>
+
+
+<header class="header">
+    <!-- Sidebar Toggle Button -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Logo -->
+    <div class="logo">
+        <a asp-controller="Admin" asp-action="Index">
+            <img src="~/Images/logo.png" alt="Logo">
+        </a>
+    </div>
+
+    <!-- Admin Section with Dropdown -->
+    <div class="admin-section" onclick="toggleDropdown()">
+        <span>ADMIN</span>
+        <i class="fas fa-user admin-icon"></i> <!-- FontAwesome Icon -->
+        <!-- Dropdown -->
+        <div class="admin-dropdown" id="adminDropdown">
+            <a asp-controller="Account" asp-action="Logout">Logout</a>
+        </div>
+    </div>
+</header>
+
+<!-- JavaScript for Dropdown -->
+<script>
+    function toggleDropdown() {
+        document.getElementById("adminDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.admin-section')) {
+            document.getElementById("adminDropdown").classList.remove("show");
+        }
+    }
+</script>

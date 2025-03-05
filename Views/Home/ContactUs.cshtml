@@ -1,0 +1,165 @@
+﻿@*
+    Customer Reviews Page - Fixed Layout (No Media Queries)
+*@
+@{
+    ViewData["Title"] = "Customer Reviews";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .customer-reviews-header {
+        background: linear-gradient(to right, #7B273B, #9c4257);
+        color: white;
+        text-align: center;
+        padding: 15px;
+        font-size: 22px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .main-container {
+        width: 1000px; /* Fixed width */
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-section {
+        width: 45%; /* Fixed width */
+        text-align: center;
+    }
+
+    .meet-us-header {
+        font-size: 22px;
+        font-weight: bold;
+        color: #7B273B;
+        margin-bottom: 10px;
+    }
+
+    .map-container {
+        width: 100%;
+        height: 350px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .contact-info {
+        text-align: center;
+        background: #f0e5e5;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 10px;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .contact-info p {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .contact-info i {
+            color: #7B273B;
+            margin-right: 5px;
+        }
+
+    .contact-form-container {
+        width: 50%; /* Fixed width */
+        background: #e0c8c8;
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #7B273B;
+        font-size: 22px;
+        font-family: 'Georgia', serif;
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    textarea.form-control {
+        height: 120px;
+        resize: none;
+    }
+
+    .btn-send {
+        background-color: #7B273B;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .btn-send:hover {
+            background-color: #5a1f2b;
+        }
+
+</style>
+
+<div class="customer-reviews-header">
+    Customer Reviews
+</div>
+
+<div class="main-container">
+    <!-- Left Section (Map & Contact Info) -->
+    <div class="left-section">
+        <div class="meet-us-header">MEET US</div>
+
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117144.0287863456!2d72.48753721937295!3d23.022505108004733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f43240b3b1%3A0xd769f3b57d1e19db!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1643456123456!5m2!1sen!2sin"
+                    allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> 123, Main Street, Ahmedabad, Gujarat</p>
+            <p><i class="fas fa-envelope"></i> info@yourwebsite.com</p>
+            <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        </div>
+    </div>
+
+    <!-- Right Section (Contact Form) -->
+    <div class="contact-form-container">
+        <h2>CONTACT US</h2>
+        <input type="text" class="form-control" placeholder="ENTER YOUR NAME" />
+        <input type="email" class="form-control" placeholder="ENTER YOUR EMAIL ADDRESS" />
+        <textarea class="form-control" placeholder="TYPE ANY MESSAGE..."></textarea>
+        <button class="btn-send">SEND</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>

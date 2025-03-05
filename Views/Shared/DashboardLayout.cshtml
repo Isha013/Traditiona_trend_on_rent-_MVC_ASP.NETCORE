@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dashboard</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- ✅ Include Header -->
+    @await Html.PartialAsync("header1")
+
+    <main>
+        @RenderBody() <!-- ✅ This will load the actual Dashboard.cshtml -->
+    </main>
+
+    <!-- ✅ Include Footer -->
+    @await Html.PartialAsync("footer")
+
+</body>
+</html>

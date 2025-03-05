@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header</title>
+
+    <!-- ✅ FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* ✅ HEADER STYLING */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 30px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* ✅ LOGO */
+        .logo img {
+            height: 70px;
+        }
+
+        /* ✅ NAVIGATION MENU */
+        .nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+            .nav a {
+                text-decoration: none;
+                color: #800000;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+                .nav a:hover {
+                    text-decoration: underline;
+                }
+
+        /* ✅ USER DROPDOWN */
+        .user-dropdown {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-icon {
+            font-size: 24px;
+            color: #800000;
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+            .dropdown-content a {
+                color: #800000;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+                font-size: 14px;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        /* ✅ SHOW DROPDOWN ON CLICK */
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ✅ Updated Header -->
+    <div class="header">
+        <!-- ✅ LOGO -->
+        <div class="logo">
+            <a asp-controller="Home" asp-action="Index">
+                <img src="~/Images/logo.png" alt="Logo" />
+            </a>
+        </div>
+
+        <!-- ✅ NAVIGATION MENU -->
+        <div class="nav">
+            <a asp-controller="Home" asp-action="Dashboard">Home</a>
+            <a asp-controller="Home" asp-action="History">History</a>
+            <a asp-controller="Home" asp-action="Categories">Categories</a>
+            <a asp-controller="Home" asp-action="Profile">Profile</a>
+            <a asp-controller="Home" asp-action="Wishlist">Wishlist</a>
+        </div>
+
+        <!-- ✅ USER ICON WITH DROPDOWN -->
+        <div class="user-dropdown">
+            <i class="fas fa-user user-icon"></i> <!-- Person Icon -->
+            <div class="dropdown-content" id="userDropdown">
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    <button type="submit" style="background: none; border: none; color: #800000; padding: 10px; width: 100%; text-align: left; cursor: pointer;">Logout</button>
+                </form>
+                <a href="/Account/Login">Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function toggleDropdown() {
+                var dropdown = document.getElementById("userDropdown");
+                dropdown.classList.toggle("show");
+            }
+
+            document.querySelector(".user-dropdown").addEventListener("click", function(event) {
+                event.stopPropagation(); // Prevents closing when clicking inside
+                toggleDropdown();
+            });
+
+            window.addEventListener("click", function(event) {
+                if (!event.target.closest('.user-dropdown')) {
+                    document.getElementById("userDropdown").classList.remove("show");
+                }
+            });
+
+            // ✅ Ensure Admin Redirect Works
+            document.getElementById("adminLogin").addEventListener("click", function(event) {
+                event.preventDefault();
+                window.location.href = "/Account/Login";
+            });
+        });
+    </script>
+
+</body>
+</html>

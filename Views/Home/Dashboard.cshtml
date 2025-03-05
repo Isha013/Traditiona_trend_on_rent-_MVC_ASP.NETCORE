@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml"; // ✅ Using After-Login Layout
+}
+
+<style>
+    .container {
+        white-space: nowrap;
+        overflow-x: auto;
+        padding: 20px;
+    }
+
+    .item {
+        display: inline-block;
+        position: relative;
+        width: 300px;
+        margin: 10px;
+        vertical-align: top;
+    }
+
+        .item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    h3 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #800020;
+        font-family: 'Georgia', serif;
+        margin-right: 50px;
+    }
+</style>
+
+<!-- ✅ Banner Section -->
+<div class="banner" style="background: url('/Images/home1.png') no-repeat center center; background-size: cover; height: 700px; display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
+    <div>
+        <h1 style="font-size: 36px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-family: 'Cinzel', serif;">
+            TRADITION MEETS AFFORDABILITY
+        </h1>
+        <p style="font-size: 18px; margin-top: 10px; font-family: 'Playfair Display', serif;">
+            Beautiful cloth for rent, designed to make every event unforgettable.
+        </p>
+    </div>
+</div>
+
+<!-- ✅ Products Section -->
+<h3>Our Products</h3>
+<a asp-controller="Categories" asp-action="Index">
+    <div class="container">
+        @for (int i = 4; i <= 10; i++)
+        {
+            <div class="item">
+                <img src="/Images/design@(i).png" alt="Design @(i)" />
+                <div class="overlay">View more</div>
+            </div>
+        }
+    </div>
+</a>
+
+<!-- ✅ Offer Section -->
+<div class="offer-section" style="display: flex; align-items: center; justify-content: space-between; margin: 20px 0; padding: 20px; background-color: #f4f4f4;">
+    <div style="flex: 1; text-align: left; margin-left: 150px; padding-right: 50px;">
+        <h2 style="font-size: 24px; color: #b22b2b;">WEDDING SEASON OFFER</h2>
+        <p style="font-size: 16px; margin-top: 10px;">Only this offer is live for 24 hours!</p>
+        <button class="offer-button" style="background-color: #b22b2b; color: white; border: none; padding: 10px 20px; margin-top: 10px; font-size: 16px; border-radius: 5px; cursor: pointer;">
+            BOOKING FAST
+        </button>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-right: 80px;">
+        <div style="text-align: center;">
+            <img src="/Images/1.png" alt="Offer Image" style="width: 70%; max-width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" />
+        </div>
+        <div style="text-align: center;">
+            <img src="/Images/2.png" alt="Offer Image" style="width: 70%; max-width: 250px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-top: -10px;" />
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Rating Section -->
+<div class="rating-section" style="text-align: center; margin: 20px 0;">
+    <button class="rating-button" style="background-color: #b22b2b; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">
+        RATING OUR PRODUCT
+    </button>
+</div>
