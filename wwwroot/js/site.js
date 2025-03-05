@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const menuToggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector(".nav");
 
-    menuToggle.addEventListener("click", function () {
-        nav.classList.toggle("active");
-    });
+    if (menuToggle && nav) {
+        menuToggle.addEventListener("click", function () {
+            nav.classList.toggle("active"); // Toggle the 'active' class
+        });
+    }
 });
+document.querySelector(".menu-toggle").click();
+console.log("JavaScript file loaded");
