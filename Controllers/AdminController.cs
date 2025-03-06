@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
+using System;
 using Traditiona_trend_on_rent.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -17,25 +18,69 @@ namespace Traditiona_trend_on_rent.Controllers
             _configuration = configuration;
         }
 
-        // ✅ Function to Check Admin Session
-        private bool CheckAdminSession()
+        // ✅ Check if the user is an admin
+        private bool IsAdminLoggedIn()
         {
             var userEmail = HttpContext.Session.GetString("Email");
             return !string.IsNullOrEmpty(userEmail) && adminEmails.Contains(userEmail);
         }
 
+        // ✅ Admin Dashboard (Displays total users & contact messages)
         public IActionResult Index()
         {
-            // ✅ Ensure Only Admin Can Access
-            if (!CheckAdminSession())
+            if (!IsAdminLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            // ✅ Fetch Total Registered Users Count
-            int totalRegisteredUsers = GetRegisteredUserCount();
+            int totalRegisteredUsers = GetTotalRegisteredUsers();
+            List<Contact> contacts = FetchContactMessages();
 
-            // ✅ Fetch Customer Reviews from Database
+            ViewData["TotalRegisteredUsers"] = totalRegisteredUsers;
+            return View("Index", contacts);
+        }
+
+        // ✅ Fetch and Display Registered Users
+        public IActionResult RegisteredUsers()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            List<Users> users = FetchRegisteredUsers();
+            return View("RegisteredUsers", users);
+        }
+
+        // ✅ Logout Function
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Account");
+        }
+
+        // ✅ Fetch Total Number of Registered Users
+        private int GetTotalRegisteredUsers()
+        {
+            int count = 0;
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM Users";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+                }
+            }
+            return count;
+        }
+
+        // ✅ Fetch Contact Messages from Database
+        private List<Contact> FetchContactMessages()
+        {
             List<Contact> contacts = new List<Contact>();
             string connectionString = _configuration.GetConnectionString("SecondConnection");
 
@@ -51,35 +96,28 @@ namespace Traditiona_trend_on_rent.Controllers
                         {
                             contacts.Add(new Contact
                             {
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                Message = reader["Message"].ToString()
+                                Name = reader["Name"]?.ToString() ?? "Unknown",
+                                Email = reader["Email"]?.ToString() ?? "N/A",
+                                Message = reader["Message"]?.ToString() ?? "No Message"
                             });
                         }
                     }
                 }
             }
-
-            // ✅ Pass total registered users count to the view
-            ViewData["TotalRegisteredUsers"] = totalRegisteredUsers;
-
-            return View("Index", contacts);
+            return contacts;
         }
 
-        // ✅ Fetch Registered Users List
-        public IActionResult RegisteredUsers()
+        // ✅ Fetch Registered Users from Database
+        private List<Users> FetchRegisteredUsers()
         {
-            if (!CheckAdminSession())
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            List<User> users = new List<User>();
-            string connectionString = _configuration.GetConnectionString("SecondConnection");
+            List<Users> users = new List<Users>();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Name, Email, Phone, CreatedAt FROM Users";
+                // ✅ Fixed SQL query syntax error (added missing comma)
+                string query = "SELECT UserName, Email, Phone, Password, CreatedAt FROM Users";
+
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     con.Open();
@@ -87,43 +125,32 @@ namespace Traditiona_trend_on_rent.Controllers
                     {
                         while (reader.Read())
                         {
-                            users.Add(new User
+                            string name = reader["UserName"]?.ToString() ?? "Unknown";
+                            string email = reader["Email"]?.ToString() ?? "N/A";
+                            string phone = reader["Phone"]?.ToString() ?? "0000000000";
+
+                            // ✅ Mask password for security reasons
+                            string password = "******";
+
+                            DateTime createdAt = DateTime.MinValue;
+                            if (reader["CreatedAt"] != DBNull.Value && DateTime.TryParse(reader["CreatedAt"].ToString(), out DateTime parsedDate))
                             {
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                Phone = reader["Phone"].ToString(),
-                                CreatedAt = reader["CreatedAt"] != DBNull.Value ? Convert.ToDateTime(reader["CreatedAt"]) : (DateTime?)null
+                                createdAt = parsedDate;
+                            }
+
+                            users.Add(new Users
+                            {
+                                UserName = name,
+                                Email = email,
+                                Phone = phone,
+                                Password = password,
+                                CreatedAt = createdAt
                             });
                         }
                     }
                 }
             }
-
-            return View("RegisteredUsers", users);
-        }
-
-        // ✅ Function to Get Registered Users Count
-        private int GetRegisteredUserCount()
-        {
-            int count = 0;
-            string connectionString = _configuration.GetConnectionString("SecondConnection");
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string query = "SELECT COUNT(*) FROM Users";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    con.Open();
-                    count = (int)cmd.ExecuteScalar();
-                }
-            }
-            return count;
-        }
-
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Account");
+            return users;
         }
     }
 }

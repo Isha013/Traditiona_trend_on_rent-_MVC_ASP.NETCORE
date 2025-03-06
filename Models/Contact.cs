@@ -8,15 +8,15 @@ namespace Traditiona_trend_on_rent.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty; // ✅ Default Value
 
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Invalid email format.")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty; // ✅ Default Value
 
         [Required(ErrorMessage = "Message is required.")]
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty; // ✅ Default Value
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // ✅ Default to UTC
     }
 }

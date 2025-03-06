@@ -1,5 +1,8 @@
+﻿
+
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
@@ -278,10 +281,10 @@ body {
 
 /* Hero Section */
 .hero {
-    position;
+    position: relative;
     background-image: url('/Images/Frame 3.png'); /* Corrected image path */
-    background-size:cover; /* Ensures the image covers the entire section */
-    background-position: center; /* Centers the image */
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position:center; /* Centers the image */
     height: 100vh; /* Sets the hero section to cover the full viewport height */
     margin-top: 5px; /* Adds margin to move the hero section below the header */
     display: flex;
@@ -289,6 +292,7 @@ body {
     align-items: center;
     color: #fff;
     text-align: center;
+   
 }
     .hero h1 {
         font-size: 36px;
@@ -423,7 +427,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     margin-top: 0px;
     width: 100%; /* Make it span the full width */
-    max-width: 100vw; /* Ensure it doesn�t exceed the viewport width */
+    max-width: 100vw; /* Ensure it doesn’t exceed the viewport width */
 }
 
 .team-members {
@@ -653,7 +657,7 @@ color: #7B273B;
     .bridal-image img {
         width: 80%;
         border-radius: 10px;
-        max-width: 300px; /* Ensures images don�t become too large */
+        max-width: 300px; /* Ensures images don’t become too large */
     }
 
 /* Franchise Section */
@@ -823,71 +827,95 @@ html, body {
     overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
-/* Main container to ensure proper layout */
+/* Main container */
 .main-container {
     width: 100%;
     min-height: 100vh;
 }
 
-/* CAROUSEL FIXES */
+/* CAROUSEL SECTION - Full Width */
 .carousel {
     width: 100%;
-    max-height: 500px; /* Fixed height for consistency */
-    overflow: hidden; /* Prevent any overflow */
+    height: 100vh; /* Full page height */
+    overflow: hidden;
 }
 
 .carousel-inner {
     width: 100%;
-    max-height: 500px; /* Same height for all slides */
+    height: 100%;
 }
 
 .carousel-item img {
     width: 100%;
-    height: 500px; /* Fixed height for consistency */
-    object-fit: cover; /* Ensures all images are cropped properly */
+    height: 100vh; /* Full viewport height */
+    object-fit: cover; /* Ensures full coverage */
 }
 
 /* OUR STORY SECTION */
-..story-section {
+.our-story-container {
+    text-align: center;
+    padding: 50px 10px;
+}
+
+/* Title */
+.our-story-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Our Story Wrapper - Desktop: Text Left, Image Right */
+.our-story-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Push text left and image right */
+    flex-wrap: nowrap;
     gap: 20px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    max-width: 80%;
+    margin: auto;
+}
+
+/* TEXT LEFT SIDE */
+.our-story-content {
+    flex: 1;
+    background-color: rgba(255, 223, 186, 0.6); /* Light background strip */
     padding: 20px;
-}
-
-.story-image {
-    flex: 1;
-    max-width: 100%; /* Ensures the image scales properly */
-}
-
-.story-content {
-    flex: 1;
+    border-radius: 10px;
     text-align: left;
-    max-width: 100%;
+    white-space: normal; /* Ensures line breaks */
+    word-wrap: break-word; /* Prevents overflow */
+    overflow: hidden; /* No vertical scrolling */
+    line-height: 1.6;
+    max-width: 50%; /* Text box width */
 }
 
-    /* Ensure text remains readable */
-    .story-content p {
-        font-size: 16px;
-        line-height: 1.5;
+/* IMAGE RIGHT SIDE */
+.our-story-image {
+    flex: 1;
+    max-width: 40%; /* Adjust image width */
+    text-align: right;
+}
+
+    .our-story-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
     }
 
-/* Responsive Fix for Smaller Screens */
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
-    .story-section {
-        flex-direction: column;
+    .our-story-wrapper {
+        flex-direction: column-reverse; /* Mobile: Image upar, Text neeche */
         text-align: center;
+        gap: 10px;
     }
 
-    .story-content {
+    .our-story-content {
         text-align: center;
+        max-width: 100%; /* Full width */
     }
 
-    .story-button {
-        width: auto; /* Keeps button adaptive */
-        margin-top: 10px;
+    .our-story-image {
+        max-width: 80%; /* Mobile pe image thodi chhoti */
     }
 }
 
@@ -900,6 +928,7 @@ html, body {
         padding: 10px;
         text-align: center;
     }
+
 
     .toggle-btn {
         display: block; /* Show sidebar toggle button */
@@ -920,18 +949,19 @@ html, body {
 
 
 /* Sidebar */
+/* Sidebar */
 .sidebar {
     width: 250px;
-    height: calc(100vh - 60px); /* Full height minus header */
+    height: 100vh; /* Full height */
     background-color: #731A33;
     padding-top: 20px;
     position: fixed;
     left: 0;
-    top: 60px; /* Adjust according to header height */
+    top: 100px; /* Header ke overlap ka issue fix */
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 20px;
+    z-index: 1000; /* Sidebar ko top pe rakhne ke liye */
 }
 
     .sidebar ul {
@@ -959,20 +989,24 @@ html, body {
                 background-color: #5a1226;
             }
 
-/* Responsive Sidebar */
+/* ✅ Fixing Main Content */
+.content {
+    margin-left: 260px; /* Sidebar jitna space chod diya + extra padding */
+    padding: 20px;
+    width: calc(100% - 260px); /* Sidebar adjust */
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    transition: margin-left 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* ✅ Responsive Sidebar Fix */
 @media (max-width: 768px) {
     .sidebar {
         width: 100px;
     }
 
     .content {
-        margin-left: 120px;
+        margin-left: 110px;
+        width: calc(100% - 110px);
     }
-}
-
-/* Main Content */
-.content {
-    margin-left: 270px; /* Push content to the right */
-    margin-top: 80px; /* Space for header */
-    padding: 20px;
 }

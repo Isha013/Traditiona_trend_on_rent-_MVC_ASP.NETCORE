@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Traditiona_trend_on_rent.Models;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace Traditiona_trend_on_rent.Controllers
 {
@@ -18,7 +19,7 @@ namespace Traditiona_trend_on_rent.Controllers
         [HttpGet]
         public IActionResult ContactUs()
         {
-            return View("../Home/ContactUs"); // ✅ Ensure correct view path
+            return View("../Home/ContactUs");
         }
 
         [HttpPost]
@@ -28,7 +29,6 @@ namespace Traditiona_trend_on_rent.Controllers
             {
                 try
                 {
-                    // ✅ Get Connection String
                     string connectionString = _configuration.GetConnectionString("SecondConnection");
 
                     using (SqlConnection con = new SqlConnection(connectionString))
@@ -36,14 +36,13 @@ namespace Traditiona_trend_on_rent.Controllers
                         string query = "INSERT INTO ContactUs (Name, Email, Message, CreatedAt) VALUES (@Name, @Email, @Message, @CreatedAt)";
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {
-                            cmd.Parameters.AddWithValue("@Name", contact.Name);
-                            cmd.Parameters.AddWithValue("@Email", contact.Email);
-                            cmd.Parameters.AddWithValue("@Message", contact.Message);
-                            cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@Name", contact.Name ?? "Unknown");  // ✅ Null-safe
+                            cmd.Parameters.AddWithValue("@Email", contact.Email ?? "No Email");  // ✅ Null-safe
+                            cmd.Parameters.AddWithValue("@Message", contact.Message ?? "No Message");  // ✅ Null-safe
+                            cmd.Parameters.AddWithValue("@CreatedAt", DateTime.UtcNow);
 
                             con.Open();
                             cmd.ExecuteNonQuery();
-                            con.Close();
                         }
                     }
 
@@ -55,7 +54,48 @@ namespace Traditiona_trend_on_rent.Controllers
                 }
             }
 
-            return View("../Home/ContactUs", contact); // ✅ Ensure correct view after form submission
+            return View("../Home/ContactUs", contact);
+        }
+
+        public IActionResult ContactList()
+        {
+            List<Contact> contacts = new List<Contact>();
+            string connectionString = _configuration.GetConnectionString("SecondConnection");
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, Name, Email, Message, CreatedAt FROM ContactUs";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // ✅ Null-safe variables
+                            string name = reader["Name"] != DBNull.Value ? reader["Name"].ToString()! : "Unknown";
+                            string email = reader["Email"] != DBNull.Value ? reader["Email"].ToString()! : "N/A";
+                            string message = reader["Message"] != DBNull.Value ? reader["Message"].ToString()! : "No Message";
+
+                            DateTime createdAt = DateTime.UtcNow; // ✅ Default Value
+                            if (reader["CreatedAt"] != DBNull.Value)
+                            {
+                                DateTime.TryParse(reader["CreatedAt"].ToString(), out createdAt);
+                            }
+
+                            contacts.Add(new Contact
+                            {
+                                Name = name,
+                                Email = email,
+                                Message = message,
+                                CreatedAt = createdAt // ✅ Safe Null Handling
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View("ContactList", contacts);
         }
     }
 }

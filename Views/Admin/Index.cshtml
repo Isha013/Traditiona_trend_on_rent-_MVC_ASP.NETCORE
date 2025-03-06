@@ -1,77 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml"; // ✅ Use Admin Layout
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 @model List<Traditiona_trend_on_rent.Models.Contact>
 
-<!-- ✅ Dashboard Stats -->
-<div class="dashboard-container">
-    <div class="stat-box red">
-        <h2>4</h2>
-        <p>TOTAL BOOKING</p>
-    </div>
-    <div class="stat-box gold">
-        <h2>6</h2>
-        <p>TOTAL COLLECTION</p>
-    </div>
-    <div class="stat-box blue">
-        <h2>@ViewData["TotalRegisteredUsers"]</h2> <!-- ✅ Dynamic Count -->
-        <p>RECENTLY REGISTERED</p>
-    </div>
-</div>
+<!-- ✅ Wrapper to Center Content -->
+<div class="content-wrapper">
 
-<!-- ✅ Customer Reviews Table -->
-<div class="reviews-container">
-    <h3>CUSTOMER REVIEWS</h3>
-    <table class="reviews-table">
-        <thead>
-            <tr>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>MESSAGE</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var contact in Model)
-            {
+    <!-- ✅ Dashboard Stats -->
+    <div class="dashboard-container">
+        <div class="stat-box red">
+            <h2>4</h2>
+            <p>TOTAL BOOKING</p>
+        </div>
+        <div class="stat-box gold">
+            <h2>6</h2>
+            <p>TOTAL COLLECTION</p>
+        </div>
+        <div class="stat-box blue">
+            <h2>@ViewData["TotalRegisteredUsers"]</h2>
+            <p>RECENTLY REGISTERED</p>
+        </div>
+    </div>
+
+    <!-- ✅ Customer Reviews Table -->
+    <div class="reviews-container">
+        <h3>CUSTOMER REVIEWS</h3>
+        <table class="reviews-table">
+            <thead>
                 <tr>
-                    <td>@contact.Name</td>
-                    <td>@contact.Email</td>
-                    <td>@contact.Message</td>
+                    <th>NAME</th>
+                    <th>EMAIL</th>
+                    <th>MESSAGE</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var contact in Model)
+                {
+                    <tr>
+                        <td>@contact.Name</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.Message</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<!-- ✅ Styles -->
+<!-- ✅ Updated Styles -->
 <style>
     body {
         font-family: Arial, sans-serif;
         background-color: #f5f5f5;
         margin: 0;
-        padding: 20px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
+
+    .content-wrapper {
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
     }
 
-    /* ✅ Dashboard Stats Section */
     .dashboard-container {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
         gap: 30px;
         margin-bottom: 40px;
         width: 100%;
-        max-width: 900px;
+        text-align: center;
     }
 
     .stat-box {
-        flex: 1; /* ✅ Flexible width */
-        min-width: 150px; /* ✅ Minimum width for small screens */
-        height: auto;
-        aspect-ratio: 1/1; /* ✅ Maintains square shape */
+        flex: 1;
+        min-width: 220px;
+        max-width: 300px;
+        height: 150px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -92,26 +106,26 @@
         }
 
     .red {
-        background-color: #d7b1b1;
+        background-color: #d9534f;
     }
 
     .gold {
-        background-color: #c8b98a;
+        background-color: #f0ad4e;
     }
 
     .blue {
-        background-color: #9daec9;
+        background-color: #5bc0de;
     }
 
-    /* ✅ Customer Reviews Section */
     .reviews-container {
         background: #fff;
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-        width: 90%; /* ✅ Responsive width */
-        max-width: 1100px;
+        width: 100%;
+        max-width: 900px;
         text-align: center;
+        margin-top: 20px;
     }
 
         .reviews-container h3 {
@@ -131,7 +145,7 @@
             padding: 18px;
             border-bottom: 1px solid #ddd;
             text-align: center;
-            word-break: break-word; /* ✅ Prevent text overflow */
+            word-break: break-word;
         }
 
         .reviews-table th {

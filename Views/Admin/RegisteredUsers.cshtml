@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@model List<Traditiona_trend_on_rent.Models.User>
+@model List<Traditiona_trend_on_rent.Models.Users>
 
 <h2 class="heading">USER REGISTRATION</h2>
 
@@ -21,11 +21,11 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td><strong>@user.Name</strong></td>
+                    <td><strong>@user.UserName</strong></td>
                     <td>@user.Email</td>
                     <td>@user.Phone</td>
                     <td>
-                        <span class="password-dots">•••••••••••</span>
+                        <span class="password-dots" data-password="@user.Password">•••••••••••</span>
                         <i class="eye-icon" onclick="togglePassword(this)">👁️</i>
                     </td>
                 </tr>
@@ -34,7 +34,6 @@
     </table>
 </div>
 
-<!-- ✅ CSS -->
 <style>
     .heading {
         color: #6b1f32;
@@ -93,12 +92,11 @@
         }
 </style>
 
-<!-- ✅ JavaScript: Password Toggle -->
 <script>
     function togglePassword(icon) {
         let passwordSpan = icon.previousElementSibling;
         if (passwordSpan.innerText === "•••••••••••") {
-            passwordSpan.innerText = "password123"; // Replace with actual password
+            passwordSpan.innerText = passwordSpan.getAttribute("data-password");
         } else {
             passwordSpan.innerText = "•••••••••••";
         }

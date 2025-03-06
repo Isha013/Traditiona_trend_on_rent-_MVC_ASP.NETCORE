@@ -20,8 +20,58 @@
 
     <!-- User Icon -->
     <div class="user-icon">
-        <a asp-controller="Account" asp-action="Register" class="user-link">👤</a>
+        <a href="#" class="user-link" onclick="toggleMenu()">👤</a>
+        <div id="user-menu" class="user-menu">
+            <a href="/Account/Register">Register</a>
+            <a href="/Account/Login">Admin</a>
+        </div>
     </div>
+
+    <style>
+        .user-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            top: 30px;
+            right: 0;
+        }
+
+            .user-menu a {
+                display: block;
+                padding: 5px 10px;
+                text-decoration: none;
+                color: black;
+            }
+
+                .user-menu a:hover {
+                    background: #ddd;
+                }
+    </style>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("user-menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        // Hide menu when clicking outside
+        document.addEventListener("click", function(event) {
+            var userIcon = document.querySelector(".user-link");
+            var menu = document.getElementById("user-menu");
+            if (!userIcon.contains(event.target) && !menu.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+
 
     <!-- Mobile Menu Toggle Button -->
     <button class="menu-toggle">&#9776;</button>
