@@ -1,5 +1,123 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<style>
+    .btn-danger-custom {
+        background-color: #8B3A62;
+        border: none;
+        padding: 10px 20px;
+        font-weight: bold;
+        color: white;
+        border-radius: 20px;
+        transition: background-color 0.3s;
+    }
+
+        .btn-danger-custom:hover {
+            background-color: #9B2A47;
+        }
+
+    .category-title {
+        background-color: #7B273B;
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .item img {
+        border-radius: 15px;
+        transition: transform 0.3s;
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+
+        .item img:hover {
+            transform: scale(1.05);
+        }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .item:hover .overlay {
+        opacity: 1;
+    }
+
+    .scroll-section {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="category-title">CATEGORIES</h2>
+
+    <!-- Buttons Section -->
+    <div class="d-flex justify-content-center gap-3 my-4">
+        <a href="@Url.Action("PartyWear", "Collection")" class="btn btn-danger-custom">PARTY WEAR</a>
+        <a href="@Url.Action("Wedding", "Collection")" class="btn btn-danger-custom">WEDDING SPECIAL</a>
+        <a href="@Url.Action("Navratri", "Collection")" class="btn btn-danger-custom">NAVRATRI SPECIAL</a>
+    </div>
+
+    <!-- First Image Section -->
+    <div class="scroll-section">
+        @foreach (var item in new[] {
+        new { Link = "Navratri", Img = "choli 1.png" },
+        new { Link = "PartyWear", Img = "red.png" },
+        new { Link = "Wedding", Img = "choli 3.png" },
+        new { Link = "Navratri", Img = "design 1.png" },
+        new { Link = "PartyWear", Img = "choli 4.png" },
+        new { Link = "Wedding", Img = "design 3.png" }
+        })
+        {
+            <div class="position-relative">
+                <div class="item">
+                    <a href="@Url.Action(item.Link, "Collection")">
+                        <img src="~/Images/@item.Img" class="img-fluid" alt="Design" />
+                        <div class="overlay text-white fw-bold">View more</div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Second Image Section -->
+    <div class="scroll-section mt-4">
+        @foreach (var item in new[] {
+        new { Link = "Navratri", Img = "design 4.png" },
+        new { Link = "PartyWear", Img = "design 5.png" },
+        new { Link = "Wedding", Img = "design 6.png" },
+        new { Link = "Navratri", Img = "design 7.png" },
+        new { Link = "PartyWear", Img = "colorfull.jpeg" },
+        new { Link = "Wedding", Img = "design 8.png" }
+        })
+        {
+            <div class="position-relative">
+                <div class="item">
+                    <a href="@Url.Action(item.Link, "Collection")">
+                        <img src="~/Images/@item.Img" class="img-fluid" alt="Design" />
+                        <div class="overlay text-white fw-bold">View more</div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

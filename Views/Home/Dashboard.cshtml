@@ -49,6 +49,56 @@
         font-family: 'Georgia', serif;
         margin-right: 50px;
     }
+
+    .container-fluid {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+        }
+
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        text-align: center;
+        padding: 8px;
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .item:hover {
+        transform: scale(1.05);
+    }
+
+        .item:hover .overlay {
+            opacity: 1;
+        }
+   
 </style>
 
 <!-- ✅ Banner Section -->
@@ -65,26 +115,51 @@
 
 <!-- ✅ Products Section -->
 <h3>Our Products</h3>
-<a asp-controller="Categories" asp-action="Index">
+
     <div class="container">
-        @for (int i = 4; i <= 10; i++)
-        {
-            <div class="item">
-                <img src="/Images/design@(i).png" alt="Design @(i)" />
-                <div class="overlay">View more</div>
-            </div>
-        }
+    <a href="@Url.Action("Categories", "Dashboard")">
+
+        <div class="item">
+
+            <img src="~/Images/choli 1.png" alt="Design 1" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="~/Images/choli 2.png" alt="Design 2" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="~/Images/choli 3.png" alt="Design 3" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="~/Images/design 1.png" alt="Design 4" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="~/Images/choli 4.png" alt="Design 5" />
+            <div class="overlay">View more</div>
+        </div>
+        <div class="item">
+            <img src="~/Images/design 3.png" alt="Design 5" />
+            <div class="overlay">View more</div>
+        </div>
+        </a>
     </div>
-</a>
 
 <!-- ✅ Offer Section -->
 <div class="offer-section" style="display: flex; align-items: center; justify-content: space-between; margin: 20px 0; padding: 20px; background-color: #f4f4f4;">
     <div style="flex: 1; text-align: left; margin-left: 150px; padding-right: 50px;">
         <h2 style="font-size: 24px; color: #b22b2b;">WEDDING SEASON OFFER</h2>
-        <p style="font-size: 16px; margin-top: 10px;">Only this offer is live for 24 hours!</p>
-        <button class="offer-button" style="background-color: #b22b2b; color: white; border: none; padding: 10px 20px; margin-top: 10px; font-size: 16px; border-radius: 5px; cursor: pointer;">
-            BOOKING FAST
-        </button>
+        <p style="font-size: 20px; color: #b22b2b; margin-top: 10px; text-align:center;">Only this offer is live for 24 hours!</p>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <button class="offer-button"
+                    onclick="location.href='@Url.Action("Categories", "Dashboard")'"
+                    style="background-color: #b22b2b; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">
+                BOOKING FAST
+            </button>
+        </div>
+
     </div>
 
     <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-right: 80px;">
@@ -97,9 +172,3 @@
     </div>
 </div>
 
-<!-- ✅ Rating Section -->
-<div class="rating-section" style="text-align: center; margin: 20px 0;">
-    <button class="rating-button" style="background-color: #b22b2b; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;">
-        RATING OUR PRODUCT
-    </button>
-</div>

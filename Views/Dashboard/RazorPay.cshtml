@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<h2>Payment Page</h2>
+
+<button id="payButton">Pay Now</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.getElementById('payButton').onclick = function () {
+        var options = {
+            "key": "YOUR_RAZORPAY_KEY", // Replace with your Razorpay Key ID
+            "amount": 50000, // Amount in paise (e.g., 50000 = ₹500)
+            "currency": "INR",
+            "name": "Your Business Name",
+            "description": "Payment for XYZ",
+            "image": "https://your-logo-url.com", // Optional: Business logo
+            "handler": function (response) {
+                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                window.location.href = "/Dashboard/PaymentSuccess"; // Redirect after success
+            },
+            "prefill": {
+                "name": "Isha Davda",
+                "email": "idavda079@rku.ac.in",
+                "contact": "9876543210"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    };
+</script>

@@ -26,7 +26,7 @@
 
     <!-- ✅ Customer Reviews Table -->
     <div class="reviews-container">
-        <h3>CUSTOMER REVIEWS</h3>
+        <h2 class="heading">CUSTOMER REVIEW</h2>
         <table class="reviews-table">
             <thead>
                 <tr>
@@ -36,103 +36,105 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var contact in Model)
+                @foreach (var Contact in Model)
                 {
                     <tr>
-                        <td>@contact.Name</td>
-                        <td>@contact.Email</td>
-                        <td>@contact.Message</td>
+                        <td>@Contact.Name</td>
+                        <td>@Contact.Email</td>
+                        <td>@Contact.Message</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+
 </div>
 
-<!-- ✅ Updated Styles -->
+<!-- ✅ Styles (Without Media Queries) -->
 <style>
     body {
         font-family: Arial, sans-serif;
         background-color: #f5f5f5;
         margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-    }
-
-    .content-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 1200px;
         padding: 20px;
     }
 
+    /* ✅ Dashboard Stats Section */
     .dashboard-container {
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 30px;
+        gap: clamp(10px, 3vw, 30px); /* Space between boxes */
         margin-bottom: 40px;
-        width: 100%;
-        text-align: center;
+        flex-wrap: wrap; /* ✅ Automatically wraps items if space is less */
     }
 
+    .heading {
+        color: #6b1f32;
+        font-weight: bold;
+        font-size: 22px;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+    }
     .stat-box {
-        flex: 1;
-        min-width: 220px;
-        max-width: 300px;
-        height: 150px;
+        width: clamp(150px, 22vw, 200px); /* ✅ Adjusts dynamically */
+        height: clamp(150px, 22vw, 200px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border-radius: 15px;
         color: white;
-        font-size: 24px;
+        font-size: clamp(20px, 3vw, 26px); /* ✅ Responsive text */
         font-weight: bold;
         text-align: center;
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
     }
 
+        .stat-box:hover {
+            transform: scale(1.05);
+        }
+
         .stat-box p {
-            font-size: 14px;
+            font-size: clamp(12px, 1.5vw, 14px);
             margin: 0;
             text-transform: uppercase;
             font-weight: bold;
         }
 
     .red {
-        background-color: #d9534f;
+        background: linear-gradient(45deg, #E74C3C, #C0392B);
     }
 
     .gold {
-        background-color: #f0ad4e;
+        background: linear-gradient(45deg, #F1C40F, #D4AC0D);
     }
 
     .blue {
-        background-color: #5bc0de;
+        background: linear-gradient(45deg, #3498DB, #2980B9);
     }
 
+    /* ✅ Customer Reviews Section */
     .reviews-container {
         background: #fff;
-        padding: 30px;
+        padding: clamp(15px, 3vw, 25px);
         border-radius: 15px;
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-        width: 100%;
-        max-width: 900px;
+        max-width: clamp(700px, 80vw, 1000px);
+        margin: 50px auto;
         text-align: center;
-        margin-top: 20px;
+        transition: transform 0.3s ease-in-out;
     }
 
+        .reviews-container:hover {
+            transform: scale(1.02);
+        }
+
         .reviews-container h3 {
-            font-size: 22px;
+            font-size: clamp(18px, 2vw, 22px);
             font-weight: bold;
             margin-bottom: 15px;
-            border-bottom: 2px solid #7B273B;
+            border-bottom: 3px solid #7B273B;
             padding-bottom: 5px;
         }
 
@@ -141,21 +143,24 @@
         border-collapse: collapse;
     }
 
-        .reviews-table th, .reviews-table td {
-            padding: 18px;
+        .reviews-table th,
+        .reviews-table td {
+            padding: clamp(10px, 1.5vw, 15px);
             border-bottom: 1px solid #ddd;
             text-align: center;
             word-break: break-word;
         }
 
         .reviews-table th {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             font-weight: bold;
             text-transform: uppercase;
+            background-color: #7B273B;
+            color: white;
         }
 
         .reviews-table td {
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             color: #333;
         }
 </style>

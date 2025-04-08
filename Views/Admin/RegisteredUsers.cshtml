@@ -44,7 +44,7 @@
     }
 
     .user-table-container {
-        background: #f5e7d6;
+        background: #EAE2CA;
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
@@ -95,10 +95,13 @@
 <script>
     function togglePassword(icon) {
         let passwordSpan = icon.previousElementSibling;
+
         if (passwordSpan.innerText === "•••••••••••") {
             passwordSpan.innerText = passwordSpan.getAttribute("data-password");
+            icon.innerText = "🔒"; // Eye open to lock icon
         } else {
             passwordSpan.innerText = "•••••••••••";
+            icon.innerText = "👁️"; // Lock back to eye icon
         }
     }
 </script>

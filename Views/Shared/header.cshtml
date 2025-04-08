@@ -1,78 +1,113 @@
-﻿
-@{
-    ViewData["Title"] = "header";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header with Bootstrap</title>
 
-<header class="header">
-    <div class="logo">
-        <img src="~/images/logo.png" alt="Logo">
-    </div>
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Navigation Menu -->
-    <nav class="nav">
-        <ul class="nav-links">
-            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-            <li><a asp-controller="Home" asp-action="OurStory">Our Story</a></li>
-            <li><a asp-controller="Home" asp-action="OurTeam">Our Team</a></li>
-            <li><a asp-controller="Home" asp-action="ContactUs">Contact Us</a></li>
-        </ul>
-    </nav>
-
-    <!-- User Icon -->
-    <div class="user-icon">
-        <a href="#" class="user-link" onclick="toggleMenu()">👤</a>
-        <div id="user-menu" class="user-menu">
-            <a href="/Account/Register">Register</a>
-            <a href="/Account/Login">Admin</a>
-        </div>
-    </div>
+    <!-- ✅ FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        .user-icon {
-            position: relative;
-            display: inline-block;
+        /* ✅ Custom Styling */
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
         }
 
-        .user-menu {
-            display: none;
-            position: absolute;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            padding: 10px;
-            top: 30px;
-            right: 0;
+        .navbar-brand img {
+            height: 60px;
         }
 
-            .user-menu a {
-                display: block;
-                padding: 5px 10px;
-                text-decoration: none;
-                color: black;
+        /* ✅ Center the navigation links on larger screens */
+        .navbar-nav {
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+        }
+
+            .navbar-nav .nav-item {
+                padding: 0 15px;
             }
 
-                .user-menu a:hover {
-                    background: #ddd;
+            .navbar-nav .nav-link {
+                color: #800000 !important;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+                .navbar-nav .nav-link:hover {
+                    text-decoration: underline;
                 }
-    </style>
 
-    <script>
-        function toggleMenu() {
-            var menu = document.getElementById("user-menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        /* ✅ User Dropdown Styling */
+        .user-dropdown .user-icon {
+            font-size: 24px;
+            color: #800000;
+            cursor: pointer;
+            padding: 10px;
         }
 
-        // Hide menu when clicking outside
-        document.addEventListener("click", function(event) {
-            var userIcon = document.querySelector(".user-link");
-            var menu = document.getElementById("user-menu");
-            if (!userIcon.contains(event.target) && !menu.contains(event.target)) {
-                menu.style.display = "none";
+        .dropdown-menu {
+            min-width: 150px;
+        }
+
+            .dropdown-menu a, .dropdown-menu button {
+                color: #800000 !important;
+                font-size: 14px;
+                text-align: left;
             }
-        });
-    </script>
+
+                .dropdown-menu a:hover, .dropdown-menu button:hover {
+                    background-color: #f1f1f1;
+                }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- ✅ Left Side: Logo -->
+            <a class="navbar-brand mx-lg-auto" href="/">
+                <img src="/images/logo.png" alt="Logo">
+            </a>
+
+            <!-- ✅ Right Side: User Dropdown -->
+            <div class="dropdown user-dropdown ms-auto order-lg-3">
+                <i class="fas fa-user user-icon dropdown-toggle" data-bs-toggle="dropdown"></i>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="/Account/Register">Register</a></li>
+
+               
+                    <li><a class="dropdown-item" href="/Account/Login">Admin</a></li>
+                </ul>
+            </div>
+
+            <!-- ✅ Navbar Toggle Button -->
+            <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- ✅ Navigation Links (List View in Mobile) -->
+            <div class="collapse navbar-collapse text-center" id="navbarNav">
+                <ul class="navbar-nav flex-column flex-lg-row align-items-lg-center mx-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="index">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="OurStory">OURSTORY</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="OurTeam">OURTEAM</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ContactUs">CONTACTUS</a></li>
+                </ul>
 
 
-    <!-- Mobile Menu Toggle Button -->
-    <button class="menu-toggle">&#9776;</button>
-</header>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

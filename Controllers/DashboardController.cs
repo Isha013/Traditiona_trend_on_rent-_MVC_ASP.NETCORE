@@ -8,34 +8,56 @@ namespace Traditiona_trend_on_rent.Controllers
         // ✅ Dashboard Page (After Login)
         public IActionResult Index()
         {
-            // ✅ Ensure user is logged in
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
             {
                 return RedirectToAction("Login", "Account");
             }
 
             ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            return View("~/Views/Home/Dashboard.cshtml"); // ✅ Load "Dashboard.cshtml"
+            return View("Dashboard"); // Assuming your Dashboard view is in Views/Dashboard
         }
 
         public IActionResult History()
         {
-            return View();
+            return View("History");
         }
 
         public IActionResult Categories()
         {
-            return View();
+            return View("Categories"); // Simplified path
         }
 
+        public IActionResult Booking()
+        {
+            return View("Booking"); // Simplified path
+        }
+        public IActionResult SaveBooking()
+        {
+            return View("SaveBooking"); // Simplified path
+        }
+        public IActionResult Edit()
+        {
+            return View(); // Full path if not in the default folder
+        }
         public IActionResult Wishlist()
         {
-            return View();
+            return View(); // Typo here
         }
+        public IActionResult UserProfile()
+        {
+            return View(); // Typo here
+        }
+        public IActionResult RazorPay()
+        {
+            return View("RazorPay");
+        }
+   
+
+
+
 
         public IActionResult Profile()
         {
-            // ✅ Ensure user is logged in
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
             {
                 return RedirectToAction("Login", "Account");

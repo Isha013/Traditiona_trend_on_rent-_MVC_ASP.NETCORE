@@ -1,0 +1,141 @@
+﻿@model ManageCollection
+
+@{
+    ViewData["Title"] = "Edit Collection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-wrapper">
+    <h2 class="form-title">Edit Collection</h2>
+
+    <div class="container">
+        <form asp-action="Edit" method="post" class="form-container">
+            <input type="hidden" asp-for="Id" />
+
+            <div>
+                <label>Choli Name</label>
+                <input asp-for="CholiName" class="form-input" />
+            </div>
+            <div>
+                <label>Choli Type</label>
+                <input asp-for="CholiType" class="form-input" />
+            </div>
+            <div>
+                <label>Topwear Fabric</label>
+                <input asp-for="TopwearFabric" class="form-input" />
+            </div>
+            <div>
+                <label>Bottomwear Fabric</label>
+                <input asp-for="BottomwearFabric" class="form-input" />
+            </div>
+            <div>
+                <label>Dupatta Type</label>
+                <input asp-for="DupattaType" class="form-input" />
+            </div>
+            <div>
+                <label>Rental Price</label>
+                <input asp-for="RentalPrice" class="form-input" type="number" step="0.01" />
+            </div>
+            <div>
+                <label>Set Type</label>
+                <input asp-for="SetType" class="form-input" />
+            </div>
+            <div>
+                <label>Rental Duration</label>
+                <input asp-for="RentalDuration" class="form-input" />
+            </div>
+            <div>
+                <label>Set Size</label>
+                <input asp-for="SetSize" class="form-input" />
+            </div>
+            <div>
+                <label>Image URL</label>
+                <input asp-for="CholiImage" class="form-input" />
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="form-button">Update</button>
+                <a asp-action="Index" class="form-button cancel-button">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .main-wrapper {
+        max-width: 650px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: #800020;
+        margin-bottom: 25px;
+    }
+
+    .container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px 25px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #800020;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #7B273B;
+        box-sizing: border-box;
+    }
+
+        .form-input::placeholder {
+            color: #7B273B;
+        }
+
+    label {
+        color: #7B273B;
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .form-button {
+        background: #800020;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-align: center;
+        text-decoration: none;
+    }
+
+        .form-button:hover {
+            background: #600015;
+        }
+
+    .cancel-button {
+        background: #888;
+        margin-left: 10px;
+    }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 15px;
+    }
+</style>

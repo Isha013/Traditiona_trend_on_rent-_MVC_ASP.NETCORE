@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Traditiona_trend_on_rent.Controllers
             List<Contact> contacts = FetchContactMessages();
 
             ViewData["TotalRegisteredUsers"] = totalRegisteredUsers;
-            return View("Index", contacts);
+            return View(contacts);
         }
 
         // ✅ Fetch and Display Registered Users
@@ -49,7 +50,7 @@ namespace Traditiona_trend_on_rent.Controllers
             }
 
             List<Users> users = FetchRegisteredUsers();
-            return View("RegisteredUsers", users);
+            return View(users);
         }
 
         // ✅ Logout Function
@@ -57,6 +58,44 @@ namespace Traditiona_trend_on_rent.Controllers
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Account");
+        }
+
+        // ✅ New Collection Page
+        public IActionResult Collection()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View(); // Ensure Collection.cshtml exists in Views/Admin
+        }
+        public IActionResult ManageCollection()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+        public IActionResult CustomerBooking()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
+        }
+        public IActionResult Payment()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View();
         }
 
         // ✅ Fetch Total Number of Registered Users
@@ -67,12 +106,19 @@ namespace Traditiona_trend_on_rent.Controllers
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT COUNT(*) FROM Users";
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                try
                 {
-                    con.Open();
-                    object result = cmd.ExecuteScalar();
-                    count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+                    string query = "SELECT COUNT(*) FROM Users";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        object result = cmd.ExecuteScalar();
+                        count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching user count: {ex.Message}");
                 }
             }
             return count;
@@ -86,22 +132,29 @@ namespace Traditiona_trend_on_rent.Controllers
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Name, Email, Message FROM ContactUs";
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                try
                 {
-                    con.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    string query = "SELECT Name, Email, Message FROM ContactUs";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        while (reader.Read())
+                        con.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            contacts.Add(new Contact
+                            while (reader.Read())
                             {
-                                Name = reader["Name"]?.ToString() ?? "Unknown",
-                                Email = reader["Email"]?.ToString() ?? "N/A",
-                                Message = reader["Message"]?.ToString() ?? "No Message"
-                            });
+                                contacts.Add(new Contact
+                                {
+                                    Name = reader["Name"]?.ToString() ?? "Unknown",
+                                    Email = reader["Email"]?.ToString() ?? "N/A",
+                                    Message = reader["Message"]?.ToString() ?? "No Message"
+                                });
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching contact messages: {ex.Message}");
                 }
             }
             return contacts;
@@ -115,42 +168,48 @@ namespace Traditiona_trend_on_rent.Controllers
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // ✅ Fixed SQL query syntax error (added missing comma)
-                string query = "SELECT UserName, Email, Phone, Password, CreatedAt FROM Users";
-
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                try
                 {
-                    con.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    string query = "SELECT UserName, Email, Phone, Password, CreatedAt FROM Users";
+
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        while (reader.Read())
+                        con.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            string name = reader["UserName"]?.ToString() ?? "Unknown";
-                            string email = reader["Email"]?.ToString() ?? "N/A";
-                            string phone = reader["Phone"]?.ToString() ?? "0000000000";
-
-                            // ✅ Mask password for security reasons
-                            string password = "******";
-
-                            DateTime createdAt = DateTime.MinValue;
-                            if (reader["CreatedAt"] != DBNull.Value && DateTime.TryParse(reader["CreatedAt"].ToString(), out DateTime parsedDate))
+                            while (reader.Read())
                             {
-                                createdAt = parsedDate;
+                                string name = reader["UserName"]?.ToString() ?? "Unknown";
+                                string email = reader["Email"]?.ToString() ?? "N/A";
+                                string phone = reader["Phone"]?.ToString() ?? "0000000000";
+                                string password = "******"; // Masked for security
+
+                                DateTime createdAt = DateTime.MinValue;
+                                if (reader["CreatedAt"] != DBNull.Value && DateTime.TryParse(reader["CreatedAt"].ToString(), out DateTime parsedDate))
+                                {
+                                    createdAt = parsedDate;
+                                }
+
+                                users.Add(new Users
+                                {
+                                    UserName = name,
+                                    Email = email,
+                                    Phone = phone,
+                                    Password = password,
+                                    CreatedAt = createdAt
+                                });
                             }
-
-                            users.Add(new Users
-                            {
-                                UserName = name,
-                                Email = email,
-                                Phone = phone,
-                                Password = password,
-                                CreatedAt = createdAt
-                            });
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching registered users: {ex.Message}");
                 }
             }
             return users;
         }
+
     }
+
 }

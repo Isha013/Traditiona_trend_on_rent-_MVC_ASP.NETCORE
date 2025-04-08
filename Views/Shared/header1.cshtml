@@ -3,205 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Header (No Media Query, Full Horizontal Menu)</title>
+    <title>Responsive Header with Bootstrap</title>
+
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- ✅ FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* ✅ HEADER STYLING */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* ✅ Custom Styling */
+        .navbar {
             background-color: #ffffff;
-            padding: 10px 30px;
             border-bottom: 1px solid #ddd;
-            position: relative;
+            padding: 10px 20px;
         }
 
-        /* ✅ LOGO */
-        .logo img {
+        .navbar-brand img {
             height: 60px;
         }
 
-        /* ✅ NAVIGATION MENU */
-        .nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            transition: all 0.3s ease-in-out;
-            width: 100%;
+        /* ✅ Center the navigation links on larger screens */
+        .navbar-nav {
+            flex-direction: row;
             justify-content: center;
-            overflow: hidden;
-            max-height: 0; /* Initially hidden */
+            width: 100%;
         }
 
-            .nav a {
-                text-decoration: none;
-                color: #800000;
-                font-weight: bold;
-                font-size: 16px;
-                padding: 10px 15px;
-                white-space: nowrap; /* Keeps items in one line */
+            .navbar-nav .nav-item {
+                padding: 0 15px;
             }
 
-                .nav a:hover {
+            .navbar-nav .nav-link {
+                color: #800000 !important;
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+                .navbar-nav .nav-link:hover {
                     text-decoration: underline;
                 }
 
-            /* ✅ NAVIGATION MENU ACTIVE STATE */
-            .nav.show-menu {
-                max-height: 100px; /* Adjust height to show items */
-            }
-
-        /* ✅ HAMBURGER MENU */
-        .menu-toggle {
-            font-size: 24px;
-            cursor: pointer;
-            color: #800000;
-            display: none; /* Hidden by default on desktop */
-        }
-
-        /* ✅ USER DROPDOWN */
-        .user-dropdown {
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-icon {
+        /* ✅ User Dropdown Styling */
+        .user-dropdown .user-icon {
             font-size: 24px;
             color: #800000;
             cursor: pointer;
             padding: 10px;
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: white;
+        .dropdown-menu {
             min-width: 150px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            text-align: left;
         }
 
-            .dropdown-content a,
-            .dropdown-content form button {
-                color: #800000;
-                padding: 10px;
-                text-decoration: none;
-                display: block;
+            .dropdown-menu a, .dropdown-menu button {
+                color: #800000 !important;
                 font-size: 14px;
-                background: none;
-                border: none;
-                width: 100%;
                 text-align: left;
-                cursor: pointer;
             }
 
-                .dropdown-content a:hover,
-                .dropdown-content form button:hover {
+                .dropdown-menu a:hover, .dropdown-menu button:hover {
                     background-color: #f1f1f1;
                 }
 
-        /* ✅ SHOW DROPDOWN */
-        .show {
-            display: block;
-        }
     </style>
 </head>
 <body>
-
-    <!-- ✅ Responsive Header -->
-    <div class="header">
-        <!-- ✅ LOGO -->
-        <div class="logo">
-            <a asp-controller="Home" asp-action="Index">
-                <img src="~/Images/logo.png" alt="Logo" />
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- ✅ Left Side: Logo -->
+            <a class="navbar-brand mx-lg-auto" href="/">
+                <img src="/images/logo.png" alt="Logo">
             </a>
-        </div>
 
-        <!-- ✅ HAMBURGER MENU -->
-        <div class="menu-toggle" id="menuToggle">
-            <i class="fas fa-bars"></i>
-        </div>
+            <!-- ✅ Right Side: User Dropdown -->
+            <div class="dropdown user-dropdown ms-auto order-lg-3">
+                <i class="fas fa-user user-icon dropdown-toggle" data-bs-toggle="dropdown"></i>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <form method="post" action="/Dashboard/UserProfile">
+                        <button class="dropdown-item" type="submit">Profile</button>
+                    </form>
+                </ul>
+            </div>
 
-        <!-- ✅ NAVIGATION MENU -->
-        <div class="nav" id="navMenu">
-            <a asp-controller="Home" asp-action="Dashboard">Home</a>
-            <a asp-controller="Home" asp-action="History">History</a>
-            <a asp-controller="Home" asp-action="Categories">Categories</a>
-            <a asp-controller="Home" asp-action="Profile">Profile</a>
-            <a asp-controller="Home" asp-action="Wishlist">Wishlist</a>
-        </div>
+            <!-- ✅ Navbar Toggle Button -->
+            <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- ✅ USER ICON WITH DROPDOWN -->
-        <div class="user-dropdown">
-            <i class="fas fa-user user-icon"></i>
-            <div class="dropdown-content" id="userDropdown">
-                <form method="post" asp-controller="Account" asp-action="Logout">
-                    <button type="submit">Logout</button>
-                </form>
-                <a href="/Account/Login">Admin</a>
+            <!-- ✅ Navigation Links (List View in Mobile) -->
+            <div class="collapse navbar-collapse text-center" id="navbarNav">
+                <ul class="navbar-nav flex-column flex-lg-row align-items-lg-center mx-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Dashboard">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="Categories">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="History">History</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="Wishlist">Wishlist</a></li>
+                </ul>
+
+
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- ✅ SCRIPT -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuToggle = document.getElementById("menuToggle");
-            const navMenu = document.getElementById("navMenu");
-
-            function checkScreenSize() {
-                if (window.innerWidth <= 768) {
-                    menuToggle.style.display = "block"; // Show hamburger menu
-                    navMenu.style.display = "none"; // Hide nav initially
-                } else {
-                    menuToggle.style.display = "none"; // Hide hamburger menu
-                    navMenu.style.display = "flex"; // Show full menu
-                }
-            }
-
-            // ✅ Run on page load
-            checkScreenSize();
-
-            // ✅ Run when window resizes
-            window.addEventListener("resize", checkScreenSize);
-
-            // ✅ Toggle Mobile Menu (Keep Items in One Line)
-            menuToggle.addEventListener("click", function () {
-                if (navMenu.style.display === "none") {
-                    navMenu.style.display = "flex"; // Show menu
-                } else {
-                    navMenu.style.display = "none"; // Hide menu
-                }
-            });
-
-            // ✅ Toggle User Dropdown
-            function toggleDropdown() {
-                var dropdown = document.getElementById("userDropdown");
-                dropdown.classList.toggle("show");
-            }
-
-            document.querySelector(".user-dropdown").addEventListener("click", function (event) {
-                event.stopPropagation();
-                toggleDropdown();
-            });
-
-            window.addEventListener("click", function (event) {
-                if (!event.target.closest('.user-dropdown')) {
-                    document.getElementById("userDropdown").classList.remove("show");
-                }
-            });
-        });
-    </script>
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

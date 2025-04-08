@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Payment Success";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<div class="container">
+    <div class="alert alert-success text-center mt-5">
+        <h2>Payment Successful!</h2>
+        <p>Your payment ID: <strong>@ViewBag.PaymentId</strong></p>
+        <a href="/Dashboard/Index" class="btn btn-primary">Go to Dashboard</a>
+    </div>
+</div>

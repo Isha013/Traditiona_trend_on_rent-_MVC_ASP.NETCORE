@@ -1,0 +1,95 @@
+﻿@model Traditiona_trend_on_rent.Models.Collection
+@{
+    ViewData["Title"] = "Add Collection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        color: #800020;
+        margin-bottom: 15px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #800020;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #7B273B;
+        box-sizing: border-box;
+    }
+
+    .form-input::placeholder {
+        color: #7B273B;
+    }
+
+    .form-button {
+        background: #800020;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .form-button:hover {
+        background: #600015;
+    }
+
+    label {
+        color: #7B273B;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <h2 class="form-title">ADD NEW COLLECTION</h2>
+    @using (Html.BeginForm("ManageCollection", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-container">
+            @Html.TextBoxFor(model => model.CholiName, new { @class = "form-input", placeholder = "Enter Choli Name", required = "required" })
+
+            @Html.DropDownListFor(model => model.CholiType, new SelectList(new[] { "Traditional", "Modern" }), "Select Type", new { @class = "form-input", required = "required" })
+
+            @Html.TextBoxFor(model => model.TopwearFabric, new { @class = "form-input", placeholder = "Enter Topwear Fabric", required = "required" })
+            @Html.TextBoxFor(model => model.BottomwearFabric, new { @class = "form-input", placeholder = "Enter Bottomwear Fabric", required = "required" })
+            @Html.TextBoxFor(model => model.DupattaType, new { @class = "form-input", placeholder = "Enter Dupatta Type", required = "required" })
+
+            @Html.TextBoxFor(model => model.RentalPrice, new { @class = "form-input", placeholder = "Enter Rental Price", required = "required", type = "number" })
+
+            @Html.DropDownListFor(model => model.SetType, new SelectList(new[] { "Single", "Combo" }), "Select Set Type", new { @class = "form-input", required = "required" })
+
+            @Html.DropDownListFor(model => model.RentalDuration, new SelectList(new[] { "1 Day", "3 Days", "1 Week" }), "Select Rental Duration", new { @class = "form-input", required = "required" })
+
+            @Html.TextBoxFor(model => model.SetSize, new { @class = "form-input", placeholder = "Enter Set Size", required = "required" })
+
+            <label>Choose Choli Image</label>
+            @Html.TextBoxFor(model => model.CholiImageFile, new { type = "file", @class = "form-input", required = "required" })
+
+            <button type="submit" class="form-button">Add Collection</button>
+        </div>
+    }
+

@@ -41,13 +41,13 @@
 
     <!-- image2 Section -->
     <div class="container">
-        <a href="Register.cshtml">
+        <a href="@Url.Action("Register", "Account")">
             <div class="item">
                 <img src="Images/design 4.png" alt="Design 1" />
                 <div class="overlay">View more</div>
             </div>
             <div class="item">
-                <img src="Images/design 5.png" alt="Design 2" />
+                <img src="Images/w3.jpeg" alt="Design 2" />
                 <div class="overlay">View more</div>
             </div>
             <div class="item">
@@ -55,7 +55,7 @@
                 <div class="overlay">View more</div>
             </div>
             <div class="item">
-                <img src="Images/design 7.png" alt="Design 4" />
+                <img src="Images/w5.jpeg" alt="Design 4" />
                 <div class="overlay">View more</div>
             </div>
             <div class="item">
@@ -160,21 +160,24 @@
     <div class="container-custom">
 
         <!-- Bridal Collection Section -->
-        <div class="bridal-section">
-            <h2>BRIDAL Collection</h2>
-        </div>
-
-        <!-- Bridal Image -->
-        <div class="bridal-image">
-            <img src="Images/bridal.png" alt="Bridal Collection" />
-        </div>
+      
 
         <!-- Franchise Section -->
-        <div class="franchise-section">
-            <h2>FLYROBE FRANCHISE</h2>
-            <p>Sign up for India's first and only rental fashion franchise and commence a Flyrobe store in your city.</p>
-            <a href="https://wa.me/yourwhatsappphonenumber" class="chat-btn">LET’S CHAT</a>
-        </div>
+        <section class="franchise-container">
+            <div class="franchise-section">
+                <h2>TRADITIONAL TREND ON RENT</h2>
+                <p>Sign up for India's first and only rental fashion franchise and commence a TRADITIONAL TREND in your city.</p>
+                <a href="https://wa.me/yourwhatsappphonenumber" class="chat-btn" target="_blank">LET’S CHAT</a>
+            </div>
+        </section>
+
+        <section class="bridal-container">
+            <div class="bridal-text">
+                <h2 style="margin-right:60px;">Our Collection</h2>
+            </div>
+            <img src="~/Images/p1.jpeg" alt="Bridal Collection Image" class="bridal-image">
+        </section>
+
 
     </div>
 </div>

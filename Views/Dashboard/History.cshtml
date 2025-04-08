@@ -1,5 +1,139 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "History";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+<style>
+    .history-heading {
+        background-color: #7B273B;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 32px;
+        text-transform: uppercase;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-top: -10px;
+    }
+    
+
+    .scroll-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .card-custom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #5B3A3A;
+        color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 15px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        width: 100%;
+        max-width: 15000px;
+        gap: 20px;
+    }
+
+    .card-img {
+        width: 200px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-left: 60px;
+    }
+
+    .card-custom:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-body {
+        flex: 1;
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-left: 50px;
+    }
+
+    .card-text p {
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        margin-left: 50px;
+    }
+
+    .icon-btn {
+        background-color: white;
+        border: none;
+        padding: 8px;
+        border-radius: 6px;
+        margin-right: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.3s;
+    }
+
+        .icon-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+    .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 8px;
+    }
+
+ 
+</style>
+
+
+@{
+    var historyItems = new List<dynamic>
+    {
+        new { Image = "~/Images/red.png", Name = "Occasion Lehenga", Address = "Ahmedabad", CholiName = "Designer Choli", CholiType = "Embroidered", TopwearFabric = "Silk", BottomwearFabric = "Georgette", DupattaType = "Net", SetType = "Full Set", Time = "24 Hours", SetSize = "M", Contact = "91739014174" },
+        new { Image = "~/Images/choli 1.png", Name = "Royal Blue Gown", Address = "Surat", CholiName = "Classic Choli", CholiType = "Printed", TopwearFabric = "Cotton", BottomwearFabric = "Chiffon", DupattaType = "Silk", SetType = "Partial Set", Time = "12 Hours", SetSize = "L", Contact = "91739014175" },
+        new { Image = "~/Images/design 5.png", Name = "Elegant Red Gown", Address = "Rajkot", CholiName = "Wedding Choli", CholiType = "Heavy Work", TopwearFabric = "Velvet", BottomwearFabric = "Brocade", DupattaType = "Organza", SetType = "Full Set", Time = "48 Hours", SetSize = "XL", Contact = "91739014176" }
+    };
+}
+
+<div class="container mt-4">
+    <div class="history-heading">History</div>
+    <div class="scroll-container">
+        @foreach (var item in historyItems)
+        {
+            <div class="card-custom">
+                <img src="@Url.Content(item.Image)" class="card-img" alt="Image">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <div class="card-text">
+                        <p><strong>Address:</strong> @item.Address</p>
+                        <p><strong>Choli Name:</strong> @item.CholiName</p>
+                        <p><strong>Set Type:</strong> @item.SetType</p>
+                        <p><strong>Time:</strong> @item.Time</p>
+                        <p><strong>Set Size:</strong> @item.SetSize</p>
+                        <p><strong>Contact:</strong> @item.Contact</p>
+                    </div>
+                    <div class="btn-container">
+                        <a href="@Url.Action("Edit", "Dashboard", new { id = item.Contact })" class="icon-btn">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <button class="icon-btn"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

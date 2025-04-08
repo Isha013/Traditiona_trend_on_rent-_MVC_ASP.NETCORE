@@ -1,0 +1,104 @@
+﻿@model ManageCollection
+
+@{
+    ViewData["Title"] = "Add Collection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+        color: #800020;
+        margin-bottom: 15px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #800020;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #7B273B;
+        box-sizing: border-box;
+    }
+
+        .form-input::placeholder {
+            color: #7B273B;
+        }
+
+    .form-button {
+        background: #800020;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .form-button:hover {
+            background: #600015;
+        }
+
+    label {
+        color: #7B273B;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <h2 class="form-title">Add New Collection</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-container">
+        <label>Choli Name</label>
+        <input asp-for="CholiName" class="form-input" />
+
+        <label>Choli Type</label>
+        <input asp-for="CholiType" class="form-input" />
+
+        <label>Topwear Fabric</label>
+        <input asp-for="TopwearFabric" class="form-input" />
+
+        <label>Bottomwear Fabric</label>
+        <input asp-for="BottomwearFabric" class="form-input" />
+
+        <label>Dupatta Type</label>
+        <input asp-for="DupattaType" class="form-input" />
+
+        <label>Rental Price</label>
+        <input asp-for="RentalPrice" class="form-input" type="number" step="0.01" />
+
+        <label>Set Type</label>
+        <input asp-for="SetType" class="form-input" />
+
+        <label>Rental Duration</label>
+        <input asp-for="RentalDuration" class="form-input" />
+
+        <label>Set Size</label>
+        <input asp-for="SetSize" class="form-input" />
+
+        <label>Choose Image</label>
+        <input type="file" name="ImageFile" class="form-input" />
+
+        <button type="submit" class="form-button">Save</button>
+        <a asp-action="Index" class="form-button" style="background: gray;">Cancel</a>
+    </form>
+</div>

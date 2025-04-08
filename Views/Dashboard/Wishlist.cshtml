@@ -1,5 +1,143 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Wishlist";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
 }
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<style>
+    .card-custom {
+        border: 1px solid #8B3A62;
+        border-radius: 10px;
+        margin: 10px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        width: 250px;
+        height: 320px;
+    }
+
+        .card-custom:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-top {
+        border-radius: 10px 10px 0 0;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .card-title {
+        color: #8B3A62;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .heart-icon {
+        color: #8B3A62;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+        .heart-icon:hover {
+            color: #9B2A47;
+        }
+
+    .wishlist-header {
+        background-color: #541222;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .card-img-top {
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+        height: 220px; /* Thodi height badha di hai taaki image properly show ho */
+        object-fit: contain; /* Image ko stretch kiye bina pura dikhane ke liye */
+        background-color: white; /* Agar image chhoti hai toh background ke liye white color */
+    }
+
+
+
+
+</style>
+
+<div class="container mt-5">
+    <div class="wishlist-header">
+        <h2>Wishlist</h2>
+    </div>
+    <div class="row justify-content-center">
+        <!-- Card 1 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/design 4.png" class="card-img-top" alt="Dress 1">
+                <div class="card-body">
+                    <h5 class="card-title">Embellishments Brown</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/design 2.png" class="card-img-top" alt="Dress 2">
+                <div class="card-body">
+                    <h5 class="card-title">Royal Blue Dress</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/design 5.png" class="card-img-top" alt="Dress 3">
+                <div class="card-body">
+                    <h5 class="card-title">Elegant Red Gown</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/w1.jpeg" class="card-img-top" alt="Dress 4">
+                <div class="card-body">
+                    <h5 class="card-title">Black Velvet Dress</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/white.png" class="card-img-top" alt="Dress 5">
+                <div class="card-body">
+                    <h5 class="card-title">Golden Wedding Dress</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card card-custom">
+                <img src="~/Images/design 6.png" class="card-img-top" alt="Dress 6">
+                <div class="card-body">
+                    <h5 class="card-title">Floral Pink Dress</h5>
+                    <span class="heart-icon">&#9825;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

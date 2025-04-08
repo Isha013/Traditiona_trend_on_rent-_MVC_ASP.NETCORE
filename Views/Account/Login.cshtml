@@ -2,8 +2,6 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-}
-@{
     ViewData["Title"] = "Login";
     Layout = null;
 }
@@ -13,85 +11,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Page</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #b09798;
+            font-family: Arial, sans-serif;
             margin: 0;
+            padding: 0;
+            background-color: #8c6b76;
+            overflow: hidden;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
         }
 
         .container {
-            width: 350px;
-            padding: 20px;
-            background-color: #dbc1ac;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            color: #772b40;
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
             text-align: center;
         }
 
-        h2 {
-            color: #5b2333;
-            font-family: 'Georgia', serif;
-            margin-bottom: 20px;
+        .form {
+            margin-top: 20px;
         }
 
-        input {
-            width: 100%;
+        .input-box {
+            width: 350px;
             padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #5b2333;
-            border-radius: 5px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 20px;
+            background-color: #f2f2f2;
+            display: block;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+        }
+
+        .btn {
+            width: 250px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #772b40;
+            color: white;
+            font-size: 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #5b1e30;
+            }
+
+        .extra-text {
+            margin-top: 15px;
+            text-align: center;
+            color: #772b40;
             font-size: 16px;
         }
 
-        button {
-            background-color: #5b2333;
-            color: white;
-            padding: 10px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-            button:hover {
-                background-color: #441822;
+            .extra-text a {
+                color: #ffd700;
+                text-decoration: none;
+                font-weight: bold;
+                margin-left: 5px;
             }
 
-        .error {
-            color: red;
+                .extra-text a:hover {
+                    text-decoration: underline;
+                }
+
+        .image-container {
+            position: absolute;
+            bottom: -500px;
+            right: 0%;
+            transition: bottom 1s ease-out;
         }
 
+            .image-container img {
+                width: 600px;
+                border-radius: 10px;
+            }
+
+            .image-container.animate {
+                bottom: -80px;
+            }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h2>Login</h2>
+        <h2 class="title">Login</h2>
 
         @if (ViewBag.ErrorMessage != null)
         {
-            <p class="error">@ViewBag.ErrorMessage</p>
+            <p class="error" style="color: red;">@ViewBag.ErrorMessage</p>
         }
 
         <form method="post" asp-action="Login">
             @Html.AntiForgeryToken()
 
             <label>Email:</label>
-            <input type="email" name="Email" required />
+            <input type="email" name="Email" class="input-box" required />
 
             <label>Password:</label>
-            <input type="password" name="Password" required />
+            <input type="password" name="Password" class="input-box" required />
 
-            <button type="submit">Login</button>
+            <button type="submit" class="btn">Login</button>
         </form>
 
-        <p>Don't have an account? <a href="@Url.Action("Register", "Account")">Sign Up</a></p>
+        <p class="extra-text">
+            Don't have an account?
+            <a href="@Url.Action("Register", "Account")">Sign Up</a>
+        </p>
     </div>
 
+    <div class="image-container" id="animatedImage">
+        <img src="~/Images/login.png" alt="Girl Image" />
+    </div>
+
+    <!-- Animation Script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("animatedImage").classList.add("animate");
+        };
+    </script>
 </body>
 </html>
