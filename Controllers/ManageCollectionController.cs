@@ -11,8 +11,12 @@ namespace Traditiona_trend_on_rent.Controllers
 
         public ManageCollectionController(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("ThirdCOnnection");
+            connectionString = configuration.GetConnectionString("ThirdConnection");
         }
+      
+
+        [HttpGet]
+      
 
         public IActionResult Index()
         {

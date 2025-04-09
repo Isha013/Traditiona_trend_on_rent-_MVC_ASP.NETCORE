@@ -43,10 +43,13 @@ namespace Traditiona_trend_on_rent.Controllers
         {
             return View(); // Typo here
         }
+       
+
         public IActionResult UserProfile()
         {
             return View(); // Typo here
         }
+
         public IActionResult RazorPay()
         {
             return View("RazorPay");

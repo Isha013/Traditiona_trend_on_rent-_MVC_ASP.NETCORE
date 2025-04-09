@@ -1,0 +1,165 @@
+﻿@model List<Booking>
+
+@{
+    ViewData["Title"] = "Customer Booking";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="heading">Customer Bookings</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div style="color:green">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div style="color:red">@TempData["Error"]</div>
+    }
+
+    <div class="table-container">
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Choli Name</th>
+                    <th>Choli Type</th>
+                    <th>Topwear Fabric</th>
+                    <th>Bottomwear Fabric</th>
+                    <th>Dupatta Type</th>
+                    <th>Rental Price</th>
+                    <th>Set Type</th>
+                    <th>Rental Time</th>
+                    <th>Set Size</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model)
+                {
+                    <tr>
+                        <td>@booking.Name</td>
+                        <td>@booking.Address</td>
+                        <td>@booking.CholiName</td>
+                        <td>@booking.CholiType</td>
+                        <td>@booking.TopwearFabric</td>
+                        <td>@booking.BottomwearFabric</td>
+                        <td>@booking.DupattaType</td>
+                        <td>@booking.RentalPrice</td>
+                        <td>@booking.SetType</td>
+                        <td>@booking.RentalTime</td>
+                        <td>@booking.SetSize</td>
+                        <td>@booking.ContactNumber</td>
+                        <td>@booking.Email</td>
+                        <td>
+                            <a class="action-btn edit-btn" asp-action="AcceptBooking" asp-route-id="@booking.Id">Accept</a>
+                            <a class="action-btn deny-btn" asp-action="DenyBooking" asp-route-id="@booking.Id">Deny</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #fff;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        margin-left:150px;
+    }
+
+    .container {
+        background-color: #f3e7d6;
+        padding: 20px 40px;
+        border-radius: 10px;
+        max-width: 1100px;
+margin:auto;        
+    }
+
+
+    .heading {
+        color: #6b1f32;
+        font-weight: bold;
+        font-size: 26px;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .table thead th {
+            background-color: #6b1f32;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+        }
+
+        .table tbody td {
+            background-color: #f3e7d6;
+            color: black;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+    .action-btn {
+        text-decoration: none;
+        padding: 8px 14px;
+        margin: 2px;
+        display: inline-block;
+        border-radius: 5px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .edit-btn {
+        background-color: green;
+        color: white;
+    }
+
+        .edit-btn:hover {
+            background-color: darkgreen;
+        }
+
+    .deny-btn {
+        background-color: red;
+        color: white;
+    }
+
+        .deny-btn:hover {
+            background-color: darkred;
+        }
+
+    /* Optional: alert success and error styles */
+    .success-message {
+        color: green;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+</style>

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
@@ -37,9 +36,16 @@ namespace Traditiona_trend_on_rent.Controllers
             int totalRegisteredUsers = GetTotalRegisteredUsers();
             List<Contact> contacts = FetchContactMessages();
 
+            int totalCollections = GetTotalCollections(); // Using raw SQL
+            int totalBookings = GetTotalBookings();       // Using raw SQL
+
             ViewData["TotalRegisteredUsers"] = totalRegisteredUsers;
+            ViewData["TotalCollections"] = totalCollections;
+            ViewData["TotalBookings"] = totalBookings;
+
             return View(contacts);
         }
+
 
         // ✅ Fetch and Display Registered Users
         public IActionResult RegisteredUsers()
@@ -109,6 +115,54 @@ namespace Traditiona_trend_on_rent.Controllers
                 try
                 {
                     string query = "SELECT COUNT(*) FROM Users";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        object result = cmd.ExecuteScalar();
+                        count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching user count: {ex.Message}");
+                }
+            }
+            return count;
+        }
+        private int GetTotalBookings()
+        {
+            int count = 0;
+            string connectionString = _configuration.GetConnectionString("FourthConnection");
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    string query = "SELECT COUNT(*) FROM Booking";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        con.Open();
+                        object result = cmd.ExecuteScalar();
+                        count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching user count: {ex.Message}");
+                }
+            }
+            return count;
+        }
+        private int GetTotalCollections()
+        {
+            int count = 0;
+            string connectionString = _configuration.GetConnectionString("ThirdConnection");
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    string query = "SELECT COUNT(*) FROM Collections";
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         con.Open();

@@ -22,6 +22,8 @@ html {
 
 body {
   margin-bottom: 60px;
+  margin:0px;
+  padding:0px;
 }
 /* General Styles */
 /* General */
@@ -329,7 +331,7 @@ body {
     display: inline-block;
     position: relative;
     width: 300px;
-    margin: 10px;
+    margin: 0;
     vertical-align: top;
 }
 

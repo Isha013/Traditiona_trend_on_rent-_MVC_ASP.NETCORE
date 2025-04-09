@@ -11,11 +11,12 @@
     <!-- ✅ Dashboard Stats -->
     <div class="dashboard-container">
         <div class="stat-box red">
-            <h2>4</h2>
-            <p>TOTAL BOOKING</p>
+            <h2>@ViewData["TotalBookings"]</h2>
+            <p>TOTAL BOOKINGS</p>
         </div>
+      
         <div class="stat-box gold">
-            <h2>6</h2>
+            <h2>@ViewData["TotalCollections"]</h2>
             <p>TOTAL COLLECTION</p>
         </div>
         <div class="stat-box blue">
@@ -23,6 +24,7 @@
             <p>RECENTLY REGISTERED</p>
         </div>
     </div>
+
 
     <!-- ✅ Customer Reviews Table -->
     <div class="reviews-container">

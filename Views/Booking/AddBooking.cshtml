@@ -1,0 +1,147 @@
+﻿@model Traditiona_trend_on_rent.Models.Booking
+
+<div class="header-container">Add Booking</div>
+
+<div class="back-arrow-container">
+    <a href="javascript:history.back()" class="back-arrow">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+</div>
+
+<div class="form-container">
+    <form asp-action="AddBooking" method="post">
+        <div>
+            <label>Name:</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div>
+            <label>Address:</label>
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div>
+            <label>Choli Name:</label>
+            <input asp-for="CholiName" class="form-control" />
+        </div>
+        <div>
+            <label>Choli Type:</label>
+            <input asp-for="CholiType" class="form-control" />
+        </div>
+        <div>
+            <label>Topwear Fabric:</label>
+            <input asp-for="TopwearFabric" class="form-control" />
+        </div>
+        <div>
+            <label>Bottomwear Fabric:</label>
+            <input asp-for="BottomwearFabric" class="form-control" />
+        </div>
+        <div>
+            <label>Dupatta Type:</label>
+            <input asp-for="DupattaType" class="form-control" />
+        </div>
+        <div>
+            <label>Rental Price:</label>
+            <input asp-for="RentalPrice" type="number" step="0.01" class="form-control" />
+        </div>
+        <div>
+            <label>Set Type:</label>
+            <input asp-for="SetType" class="form-control" />
+        </div>
+        <div>
+            <label>Rental Time:</label>
+            <input asp-for="RentalTime" class="form-control" />
+        </div>
+        <div>
+            <label>Set Size:</label>
+            <input asp-for="SetSize" class="form-control" />
+        </div>
+        <div>
+            <label>Contact Number:</label>
+            <input asp-for="ContactNumber" class="form-control" />
+        </div>
+        <div>
+            <label>Email:</label>
+            <input asp-for="Email" type="email" class="form-control" />
+        </div>
+        <button type="submit" class="btn-custom">Add Booking</button>
+    </form>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .header-container {
+        background-color: #7B273B;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 32px;
+        text-transform: uppercase;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        margin-top: -10px;
+    }
+
+    .form-container {
+        max-width: 1000px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: auto;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #7C3E3E;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        padding: 6px;
+        height: 35px;
+        width: 100%;
+    }
+
+    .btn-custom {
+        background: #7C3E3E;
+        color: white;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        font-weight: bold;
+        border: none;
+        margin-top: 10px;
+    }
+
+        .btn-custom:hover {
+            background: #5A2D2D;
+        }
+
+    .back-arrow {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 50%;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+    }
+
+        .back-arrow i {
+            font-size: 20px;
+            color: black;
+        }
+
+    .back-arrow-container {
+        position: absolute;
+        top: 120px;
+        left: 20px;
+        z-index: 1000;
+    }
+</style>
+
+<!-- Include FontAwesome for the back arrow icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
