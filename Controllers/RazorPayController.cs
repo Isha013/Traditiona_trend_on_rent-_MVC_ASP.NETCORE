@@ -3,75 +3,105 @@ using Razorpay.Api;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Traditiona_trend_on_rent.Models;
 
 namespace Traditiona_trend_on_rent.Controllers
 {
     public class RazorPayController : Controller
     {
-        private readonly string key = "YOUR_RAZORPAY_KEY";
-        private readonly string secret = "YOUR_RAZORPAY_SECRET";
-        private readonly string connectionString = "YOUR_DATABASE_CONNECTION_STRING";
+        private readonly string key = "rzp_test_x8tV5oSUixLmbV";  // Replace with live key later
+        private readonly string secret = "fWH4faC9rEJ9StONJyc8ZXCc"; // Replace with live secret
 
-        public IActionResult ProceedToPayment(decimal amount, string name, string email, string phone)
+        // Initial page to make a payment
+        [Route("PayNow")]
+        public IActionResult Index()
         {
-            var client = new RazorpayClient(key, secret);
-            var orderOptions = new Dictionary<string, object>
-            {
-                { "amount", (int)(amount * 100) }, // Amount in paise
-                { "currency", "INR" },
-                { "receipt", "receipt_" + Guid.NewGuid().ToString() },
-                { "payment_capture", 1 }
-            };
-            var order = client.Order.Create(orderOptions);
-            string orderId = order["id"].ToString();
+            return View("~/Views/PayNow/Index.cshtml");
+        }
 
-            // Save payment details into the SQL database using ADO.NET
-            using (SqlConnection conn = new SqlConnection(connectionString))
+        // Post method to create an order
+        [HttpPost]
+        public IActionResult CreateOrder(string name, string email, string phone, decimal amount)
+        {
+            try
             {
-                conn.Open();
-                string query = "INSERT INTO Payment (Name, Email, Phone, Amount, OrderId, PaymentStatus, CreatedAt) " +
-                               "VALUES (@Name, @Email, @Phone, @Amount, @OrderId, 'Pending', GETDATE())";
+                RazorpayClient client = new RazorpayClient(key, secret);
 
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                var options = new Dictionary<string, object>
                 {
+                    { "amount", amount * 100 }, // Razorpay accepts amount in paise
+                    { "currency", "INR" },
+                    { "receipt", Guid.NewGuid().ToString() },
+                    { "payment_capture", 1 }
+                };
+
+                // Create order via Razorpay API
+                Order order = client.Order.Create(options);
+
+                // Pass the Razorpay details to the view
+                ViewBag.RazorpayKey = key;
+                ViewBag.OrderId = order["id"].ToString();  // Order ID from Razorpay
+                ViewBag.Amount = amount;  // Amount in INR
+                ViewBag.CustomerName = name;
+                ViewBag.CustomerEmail = email;
+                ViewBag.CustomerPhone = phone;
+
+                // Redirect to payment page
+                return View("~/Views/PayNow/Payment.cshtml");
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors during order creation
+                ViewBag.ErrorMessage = "Order creation failed: " + ex.Message;
+                return View("PaymentFailed");
+            }
+        }
+
+        // Handle Payment Success
+        public IActionResult PaymentSuccess(string paymentId, string orderId)
+        {
+            try
+            {
+                // Example customer details (in real scenario, you can fetch from DB or TempData)
+                string name = "Demo User";
+                string email = "demo@example.com";
+                string phone = "1234567890";
+                decimal amount = 100;
+
+                string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Payment;Integrated Security=True";
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = @"INSERT INTO Payment 
+                                     (Name, Email, Phone, Amount, OrderId, PaymentId, PaymentStatus, CreatedAt)
+                                     VALUES 
+                                     (@Name, @Email, @Phone, @Amount, @OrderId, @PaymentId, @PaymentStatus, @CreatedAt)";
+                    SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@Name", name);
                     cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@Phone", phone);
                     cmd.Parameters.AddWithValue("@Amount", amount);
                     cmd.Parameters.AddWithValue("@OrderId", orderId);
+                    cmd.Parameters.AddWithValue("@PaymentId", paymentId);
+                    cmd.Parameters.AddWithValue("@PaymentStatus", "Success");
+                    cmd.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+
+                    conn.Open();
                     cmd.ExecuteNonQuery();
                 }
+
+                return View("PaymentSuccess");
             }
-
-            ViewBag.RazorpayKey = key;
-            ViewBag.Amount = amount;
-            ViewBag.OrderId = orderId;
-            ViewBag.CustomerName = name;
-            ViewBag.CustomerEmail = email;
-            ViewBag.CustomerPhone = phone;
-
-            return View("Payment");
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Payment success processing failed: " + ex.Message;
+                return View("PaymentFailed");
+            }
         }
 
-        public IActionResult PaymentSuccess(string paymentId, string orderId)
+        // Handle Payment Failure
+        public IActionResult PaymentFailed()
         {
-            // Update payment status in the database
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "UPDATE Payment SET PaymentId = @PaymentId, PaymentStatus = 'Success' WHERE OrderId = @OrderId";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@PaymentId", paymentId);
-                    cmd.Parameters.AddWithValue("@OrderId", orderId);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-
-            ViewBag.PaymentId = paymentId;
-            return View("PaymentSuccess");
+            return View("PaymentFailed");
         }
     }
 }

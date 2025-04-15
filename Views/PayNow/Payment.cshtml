@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    var options = {
+        "key": "@ViewBag.RazorpayKey",  // Your Razorpay Key
+        "amount": "@((decimal)ViewBag.Amount * 100)",  // amount in paise
+        "currency": "INR",
+        "name": "@ViewBag.CustomerName",  // Customer Name
+        "description": "Product Payment",
+        "order_id": "@ViewBag.OrderId",  // Razorpay Order ID
+        "handler": function (response) {
+            // On success, redirect to Payment Success page
+            window.location.href = "/PayNow/PaymentSuccess?paymentId=" + response.razorpay_payment_id + "&orderId=" + response.razorpay_order_id;
+        },
+        "prefill": {
+            "name": "@ViewBag.CustomerName",  // Customer name
+            "email": "@ViewBag.CustomerEmail",  // Customer email
+            "contact": "@ViewBag.CustomerPhone"  // Customer phone
+        },
+        "theme": {
+            "color": "#3399cc"
+        },
+        "modal": {
+            "ondismiss": function () {
+                // Redirect to payment failed page if modal is dismissed
+                window.location.href = "/RazorPay/PaymentFailed";
+            }
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+</script>

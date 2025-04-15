@@ -66,13 +66,12 @@ public class BookingController : Controller
 
             // Send email
             string subject = "Booking Confirmation";
-            string body = $"Hi {model.Name},\n\nThank you for your booking.\nYour booking has been received successfully!";
+            string body = $"Hi {model.Name},\n\nThank you for your booking.\nYour booking has been received successfully!\nhttps://localhost:7021/PayNow";
             _emailService.SendEmail(model.Email, subject, body);
 
             TempData["Success"] = "Booking added and email sent!";
+            return RedirectToAction("Booking", "Dashboard");
 
-            // 🔁 Redirect to Payment View
-            return RedirectToAction("RazorPay", "Dashboard");
         }
 
         return View(model);
