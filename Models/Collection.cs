@@ -1,6 +1,6 @@
 ﻿    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
-
+//this is change
     namespace Traditiona_trend_on_rent.Models
     {
         public class Collection
