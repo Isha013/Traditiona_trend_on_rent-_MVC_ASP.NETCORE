@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Traditiona_trend_on_rent.Models;
-
+//using razorpay
 namespace Traditiona_trend_on_rent.Controllers
 {
     [Route("RazorPay")]
