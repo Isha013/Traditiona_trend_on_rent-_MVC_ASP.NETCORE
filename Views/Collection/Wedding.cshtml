@@ -27,6 +27,17 @@
 
     <!-- Link External CSS -->
     <link rel="stylesheet" href="~/css/site.css">
+
+    <style>
+        .wishlist-icon i {
+            color: gray;
+            transition: color 0.3s;
+        }
+
+        .wishlist-icon.red i {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
@@ -58,15 +69,14 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("Booking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
                 </div>
-
                 <!-- Card 2 -->
                 <div class="rental-card">
                     <img src="~/Images/choli 1.png" alt="Lehenga Choli">
@@ -82,10 +92,32 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("Booking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
+                            <i class="fas fa-shopping-bag"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="rental-card">
+                    <img src="~/Images/w4.jpeg" alt="Lehenga Choli">
+                    <div class="rental-details">
+                        <div class="rental-price">RENTAL PRIZE: Rs. 5000/-</div>
+                        <div class="rental-info">
+                            <strong>NAME:</strong> DESIGNER LEHENGA <br>
+                            <strong>TOPWEAR FABRIC:</strong> NET SILK <br>
+                            <strong>BOTTOMWEAR FABRIC:</strong> ZARI <br>
+                            <strong>DUPATTA FABRIC:</strong> GEORGETTE <br>
+                            <strong>SET TYPE:</strong> CHOLI AND DUPATTA <br>
+                            <strong>SIZE:</strong> FREE SIZE
+                        </div>
+                    </div>
+                    <div class="rental-icons">
+                        <a href="javascript:void(0);" class="wishlist-icon">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
@@ -93,7 +125,7 @@
 
                 <!-- Card 3 -->
                 <div class="rental-card">
-                    <img src="~/Images/choli 2.png" alt="Lehenga Choli">
+                    <img src="~/Images/w6.jpeg" alt="Lehenga Choli">
                     <div class="rental-details">
                         <div class="rental-price">RENTAL PRIZE: Rs. 3500/-</div>
                         <div class="rental-info">
@@ -106,10 +138,10 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("Booking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
@@ -118,6 +150,12 @@
             </div>
         </div>
     </div>
-
+    <script>
+        document.querySelectorAll('.wishlist-icon').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                icon.classList.toggle('red');
+            });
+        });
+    </script>
 </body>
 </html>

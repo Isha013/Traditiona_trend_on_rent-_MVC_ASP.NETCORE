@@ -27,6 +27,16 @@
 
     <!-- Link External CSS -->
     <link rel="stylesheet" href="~/css/site.css">
+    <style>
+        .wishlist-icon i {
+            color: gray;
+            transition: color 0.3s;
+        }
+
+        .wishlist-icon.red i {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
@@ -58,10 +68,10 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("SaveBooking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
@@ -82,10 +92,10 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("Booking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
@@ -106,18 +116,23 @@
                         </div>
                     </div>
                     <div class="rental-icons">
-                        <a href="@Url.Action("Wishlist", "Dashboard")">
+                        <a href="javascript:void(0);" class="wishlist-icon">
                             <i class="fas fa-heart"></i>
                         </a>
-                        <a href="@Url.Action("Booking", "Dashboard")">
+                        <a href="@Url.Action("AddBooking", "Booking")">
                             <i class="fas fa-shopping-bag"></i>
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
+    <script>
+        document.querySelectorAll('.wishlist-icon').forEach(function (icon) {
+            icon.addEventListener('click', function () {
+                icon.classList.toggle('red');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,9 +3,11 @@ using Razorpay.Api;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Traditiona_trend_on_rent.Models;
 
 namespace Traditiona_trend_on_rent.Controllers
 {
+    [Route("RazorPay")]
     public class RazorPayController : Controller
     {
         private readonly string key = "rzp_test_x8tV5oSUixLmbV";  // Replace with live key later
@@ -20,6 +22,7 @@ namespace Traditiona_trend_on_rent.Controllers
 
         // Post method to create an order
         [HttpPost]
+        [Route("CreateOrder")]
         public IActionResult CreateOrder(string name, string email, string phone, decimal amount)
         {
             try
@@ -57,15 +60,15 @@ namespace Traditiona_trend_on_rent.Controllers
         }
 
         // Handle Payment Success
+        [Route("PaymentSuccess")]
         public IActionResult PaymentSuccess(string paymentId, string orderId)
         {
             try
             {
-                // Example customer details (in real scenario, you can fetch from DB or TempData)
-                string name = "Demo User";
+                string name = "Demo User"; // Placeholder values, replace with real values
                 string email = "demo@example.com";
                 string phone = "1234567890";
-                decimal amount = 100;
+                decimal amount = 100; // Replace with actual amount if needed
 
                 string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Payment;Integrated Security=True";
 
@@ -89,19 +92,55 @@ namespace Traditiona_trend_on_rent.Controllers
                     cmd.ExecuteNonQuery();
                 }
 
-                return View("PaymentSuccess");
+                // Redirect to Payment Success view
+                return View("~/Views/PayNow/PaymentSuccess.cshtml");
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Payment success processing failed: " + ex.Message;
-                return View("PaymentFailed");
+                return View("~/Views/PayNow/PaymentFailed.cshtml");
             }
         }
 
         // Handle Payment Failure
+        [Route("PaymentFailed")]
         public IActionResult PaymentFailed()
         {
-            return View("PaymentFailed");
+            return View("~/Views/PayNow/PaymentFailed.cshtml");
+        }
+
+        // Show all payments
+        [Route("ShowPayments")]
+        public IActionResult ShowPayments()
+        {
+            List<Payment> payments = new List<Payment>();
+
+            string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Payment;Integrated Security=True";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Payment";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    payments.Add(new Payment
+                    {
+                        Name = reader["Name"].ToString(),
+                        Email = reader["Email"].ToString(),
+                        Phone = reader["Phone"].ToString(),
+                        Amount = Convert.ToDecimal(reader["Amount"]),
+                        OrderId = reader["OrderId"].ToString(),
+                        PaymentId = reader["PaymentId"].ToString(),
+                        PaymentStatus = reader["PaymentStatus"].ToString(),
+                        CreatedAt = Convert.ToDateTime(reader["CreatedAt"])
+                    });
+                }
+            }
+
+            return View("~/Views/Admin/Payment.cshtml", payments);
         }
     }
 }

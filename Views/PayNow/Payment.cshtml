@@ -14,7 +14,7 @@
         "order_id": "@ViewBag.OrderId",  // Razorpay Order ID
         "handler": function (response) {
             // On success, redirect to Payment Success page
-            window.location.href = "/PayNow/PaymentSuccess?paymentId=" + response.razorpay_payment_id + "&orderId=" + response.razorpay_order_id;
+            window.location.href = "/RazorPay/PaymentSuccess?paymentId=" + response.razorpay_payment_id + "&orderId=" + response.razorpay_order_id;
         },
         "prefill": {
             "name": "@ViewBag.CustomerName",  // Customer name

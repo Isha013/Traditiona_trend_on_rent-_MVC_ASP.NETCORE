@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Pay Now";
     Layout = "~/Views/Shared/DashboardLayout.cshtml";
-
 }
 
 <h2>Make a Payment</h2>
@@ -71,21 +70,39 @@
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+    }
 </style>
 
 <div class="form-container">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="error-message">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
     <form method="post" asp-controller="RazorPay" asp-action="CreateOrder">
+        <input type="hidden" name="razorpayKey" value="@ViewBag.RazorpayKey" />
+
         <label for="name">Name</label>
-        <input type="text" name="name" required /><br /><br />
+        <input type="text" name="name" value="@ViewBag.CustomerName" required /><br /><br />
 
         <label for="email">Email</label>
-        <input type="email" name="email" required /><br /><br />
+        <input type="email" name="email" value="@ViewBag.CustomerEmail" required /><br /><br />
 
         <label for="phone">Phone</label>
-        <input type="text" name="phone" required /><br /><br />
+        <input type="text" name="phone" value="@ViewBag.CustomerPhone" required /><br /><br />
 
-        <label for="amount">Amount</label>
-        <input type="number" name="amount" required /><br /><br />
+        <label for="amount">Amount (INR)</label>
+        <input type="number" name="amount" value="@ViewBag.Amount" min="1" required /><br /><br />
+
+        <input type="hidden" name="orderId" value="@ViewBag.OrderId" />
 
         <button type="submit">Pay Now</button>
     </form>

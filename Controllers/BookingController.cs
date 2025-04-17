@@ -166,6 +166,97 @@ public class BookingController : Controller
 
         return email;
     }
+    [HttpPost]
+    public IActionResult EditBooking(Booking model)
+    {
+        if (ModelState.IsValid)
+        {
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                con.Open();
+                string query = @"UPDATE Booking SET 
+                             Name = @Name, Address = @Address, CholiName = @CholiName, CholiType = @CholiType,
+                             TopwearFabric = @TopwearFabric, BottomwearFabric = @BottomwearFabric,
+                             DupattaType = @DupattaType, RentalPrice = @RentalPrice, SetType = @SetType,
+                             RentalTime = @RentalTime, SetSize = @SetSize, ContactNumber = @ContactNumber,
+                             Email = @Email WHERE Id = @Id";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", model.Id);
+                    cmd.Parameters.AddWithValue("@Name", model.Name);
+                    cmd.Parameters.AddWithValue("@Address", model.Address);
+                    cmd.Parameters.AddWithValue("@CholiName", model.CholiName);
+                    cmd.Parameters.AddWithValue("@CholiType", model.CholiType);
+                    cmd.Parameters.AddWithValue("@TopwearFabric", model.TopwearFabric);
+                    cmd.Parameters.AddWithValue("@BottomwearFabric", model.BottomwearFabric);
+                    cmd.Parameters.AddWithValue("@DupattaType", model.DupattaType);
+                    cmd.Parameters.AddWithValue("@RentalPrice", model.RentalPrice);
+                    cmd.Parameters.AddWithValue("@SetType", model.SetType);
+                    cmd.Parameters.AddWithValue("@RentalTime", model.RentalTime);
+                    cmd.Parameters.AddWithValue("@SetSize", model.SetSize);
+                    cmd.Parameters.AddWithValue("@ContactNumber", model.ContactNumber);
+                    cmd.Parameters.AddWithValue("@Email", model.Email);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            TempData["Success"] = "Booking updated successfully!";
+            return RedirectToAction("CustomerBooking");
+        }
+
+        return View(model);
+    }
+    [HttpGet]
+    public IActionResult EditBooking(int id)
+    {
+        Booking booking = null;
+
+        using (SqlConnection con = new SqlConnection(_connectionString))
+        {
+            con.Open();
+            string query = "SELECT * FROM Booking WHERE Id = @Id";
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        booking = new Booking
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                            Address = reader["Address"].ToString(),
+                            CholiName = reader["CholiName"].ToString(),
+                            CholiType = reader["CholiType"].ToString(),
+                            TopwearFabric = reader["TopwearFabric"].ToString(),
+                            BottomwearFabric = reader["BottomwearFabric"].ToString(),
+                            DupattaType = reader["DupattaType"].ToString(),
+                            RentalPrice = Convert.ToDecimal(reader["RentalPrice"]),
+                            SetType = reader["SetType"].ToString(),
+                            RentalTime = reader["RentalTime"].ToString(),
+                            SetSize = reader["SetSize"].ToString(),
+                            ContactNumber = reader["ContactNumber"].ToString(),
+                            Email = reader["Email"].ToString()
+                        };
+                    }
+                }
+            }
+        }
+
+        if (booking == null)
+        {
+            return NotFound(); // Handle if booking with the given ID is not found
+        }
+
+        return View("EditCollection", booking); // Load the form with existing data
+    }
+
+
+
 }
 
 
